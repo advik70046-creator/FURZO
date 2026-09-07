@@ -2,13 +2,13 @@
 
 /* =========================================================
    FURZO E-COMMERCE
-   Complete JavaScript
-========================================================= */
+   CLEAN COMPLETE JAVASCRIPT
+   ========================================================= */
 
 
 /* =========================================================
    STORAGE
-========================================================= */
+   ========================================================= */
 
 const CART_STORAGE_KEY = "furzo_cart";
 const ADDRESS_STORAGE_KEY = "furzo_address";
@@ -17,29 +17,35 @@ const ORDER_STORAGE_KEY = "furzo_orders";
 
 /* =========================================================
    STATE
-========================================================= */
+   ========================================================= */
 
-let cart = loadCart();
-
+let cart = [];
 let currentCategory = "All";
-
 let currentSearch = "";
-
 let selectedProduct = null;
+let toastTimer = null;
 
 
 /* =========================================================
    PRODUCT DATA
-========================================================= */
+   ========================================================= */
 
 const products = [
+
+    /* =====================================================
+       FRUITS
+       ===================================================== */
 
     {
         id: 1,
         name: "Fresh Bananas",
-        category: "Fruits & Vegetables",
+        category: "Fruits",
         price: 45,
         unit: "1 kg",
+        image: "images/banana.jpg",
+        images: [
+            "images/banana.jpg"
+        ],
         icon: "🍌",
         discount: 10,
         rating: 4.5,
@@ -50,9 +56,16 @@ const products = [
     {
         id: 2,
         name: "Shimla Apples",
-        category: "Fruits & Vegetables",
+        category: "Fruits",
         price: 129,
         unit: "4 pcs",
+        image: "images/apples.jpg",
+        images: [
+            "images/apples.jpg",
+            "images/apples-2.jpg",
+            "images/apples-3.jpg",
+            "images/apples-4.jpg"
+        ],
         icon: "🍎",
         discount: 15,
         rating: 4.6,
@@ -63,9 +76,13 @@ const products = [
     {
         id: 3,
         name: "Fresh Mango",
-        category: "Fruits & Vegetables",
+        category: "Fruits",
         price: 199,
         unit: "1 kg",
+        image: "images/mango.jpg",
+        images: [
+            "images/mango.jpg"
+        ],
         icon: "🥭",
         discount: 10,
         rating: 4.8,
@@ -73,10 +90,15 @@ const products = [
         description: "Sweet and juicy seasonal mangoes."
     },
 
+
+    /* =====================================================
+       VEGETABLES
+       ===================================================== */
+
     {
         id: 4,
         name: "Tomato",
-        category: "Fruits & Vegetables",
+        category: "Vegetables",
         price: 39,
         unit: "1 kg",
         icon: "🍅",
@@ -89,7 +111,7 @@ const products = [
     {
         id: 5,
         name: "Potato",
-        category: "Fruits & Vegetables",
+        category: "Vegetables",
         price: 35,
         unit: "1 kg",
         icon: "🥔",
@@ -102,7 +124,7 @@ const products = [
     {
         id: 6,
         name: "Onion",
-        category: "Fruits & Vegetables",
+        category: "Vegetables",
         price: 42,
         unit: "1 kg",
         icon: "🧅",
@@ -115,7 +137,7 @@ const products = [
     {
         id: 7,
         name: "Green Capsicum",
-        category: "Fruits & Vegetables",
+        category: "Vegetables",
         price: 49,
         unit: "500 g",
         icon: "🫑",
@@ -128,7 +150,7 @@ const products = [
     {
         id: 8,
         name: "Carrot",
-        category: "Fruits & Vegetables",
+        category: "Vegetables",
         price: 35,
         unit: "500 g",
         icon: "🥕",
@@ -141,7 +163,7 @@ const products = [
     {
         id: 9,
         name: "Cucumber",
-        category: "Fruits & Vegetables",
+        category: "Vegetables",
         price: 29,
         unit: "500 g",
         icon: "🥒",
@@ -154,7 +176,7 @@ const products = [
     {
         id: 10,
         name: "Sweet Corn",
-        category: "Fruits & Vegetables",
+        category: "Vegetables",
         price: 49,
         unit: "2 pcs",
         icon: "🌽",
@@ -165,9 +187,9 @@ const products = [
     },
 
 
-    /* =========================
+    /* =====================================================
        DAIRY
-    ========================= */
+       ===================================================== */
 
     {
         id: 11,
@@ -274,9 +296,9 @@ const products = [
     },
 
 
-    /* =========================
-       SNACKS
-    ========================= */
+    /* =====================================================
+       MUNCHIES
+       ===================================================== */
 
     {
         id: 19,
@@ -344,9 +366,9 @@ const products = [
     },
 
 
-    /* =========================
+    /* =====================================================
        DRINKS
-    ========================= */
+       ===================================================== */
 
     {
         id: 24,
@@ -414,9 +436,9 @@ const products = [
     },
 
 
-    /* =========================
+    /* =====================================================
        INSTANT FOOD
-    ========================= */
+       ===================================================== */
 
     {
         id: 29,
@@ -471,9 +493,9 @@ const products = [
     },
 
 
-    /* =========================
+    /* =====================================================
        TEA COFFEE
-    ========================= */
+       ===================================================== */
 
     {
         id: 33,
@@ -528,9 +550,9 @@ const products = [
     },
 
 
-    /* =========================
+    /* =====================================================
        BISCUITS
-    ========================= */
+       ===================================================== */
 
     {
         id: 37,
@@ -585,9 +607,9 @@ const products = [
     },
 
 
-    /* =========================
-       CHOCOLATES
-    ========================= */
+    /* =====================================================
+       SWEETS
+       ===================================================== */
 
     {
         id: 41,
@@ -642,9 +664,9 @@ const products = [
     },
 
 
-    /* =========================
+    /* =====================================================
        STAPLES
-    ========================= */
+       ===================================================== */
 
     {
         id: 45,
@@ -725,9 +747,9 @@ const products = [
     },
 
 
-    /* =========================
+    /* =====================================================
        CLEANING
-    ========================= */
+       ===================================================== */
 
     {
         id: 51,
@@ -782,9 +804,9 @@ const products = [
     },
 
 
-    /* =========================
+    /* =====================================================
        PERSONAL CARE
-    ========================= */
+       ===================================================== */
 
     {
         id: 55,
@@ -839,9 +861,9 @@ const products = [
     },
 
 
-    /* =========================
+    /* =====================================================
        BABY CARE
-    ========================= */
+       ===================================================== */
 
     {
         id: 59,
@@ -870,9 +892,9 @@ const products = [
     },
 
 
-    /* =========================
+    /* =====================================================
        PET CARE
-    ========================= */
+       ===================================================== */
 
     {
         id: 61,
@@ -898,6 +920,28 @@ const products = [
         rating: 4.7,
         stock: 30,
         description: "Nutritious cat food."
+    },
+
+
+    /* =====================================================
+       EXTRA PRODUCT
+       ===================================================== */
+
+    {
+        id: 63,
+        name: "Parle-G Gold",
+        category: "Bakery & Biscuits",
+        price: 20,
+        unit: "1 pack",
+        image: "images/parle-g.jpg",
+        images: [
+            "images/parle-g.jpg"
+        ],
+        icon: "🍪",
+        discount: 0,
+        rating: 4.7,
+        stock: 100,
+        description: "Crispy and delicious Parle-G Gold biscuits."
     }
 
 ];
@@ -905,34 +949,66 @@ const products = [
 
 /* =========================================================
    DOM HELPERS
-========================================================= */
+   ========================================================= */
 
 function getElement(id) {
-
     return document.getElementById(id);
-
 }
 
 
 function select(selector) {
-
     return document.querySelector(selector);
-
 }
 
 
 function selectAll(selector) {
-
     return Array.from(
         document.querySelectorAll(selector)
     );
+}
 
+
+/* =========================================================
+   IMAGE HELPERS
+   ========================================================= */
+
+function getProductImages(product) {
+
+    if (
+        Array.isArray(product.images) &&
+        product.images.length
+    ) {
+        return product.images;
+    }
+
+    if (product.image) {
+        return [product.image];
+    }
+
+    return [];
+}
+
+
+function getImageForIndex(product, index) {
+
+    const images = getProductImages(product);
+
+    if (!images.length) {
+        return null;
+    }
+
+    if (images[index]) {
+        return images[index];
+    }
+
+    return images[images.length - 1];
 }
 
 
 /* =========================================================
    CART STORAGE
-========================================================= */
+   ========================================================= */
+
 function getCartStorageKey() {
 
     const savedUser =
@@ -942,34 +1018,47 @@ function getCartStorageKey() {
         return "furzo_cart_guest";
     }
 
-    const user =
-        JSON.parse(savedUser);
+    try {
 
-    return "furzo_cart_" + user.phone;
+        const user =
+            JSON.parse(savedUser);
+
+        if (user && user.phone) {
+            return "furzo_cart_" + user.phone;
+        }
+
+    } catch (error) {
+
+        console.error(
+            "User data error:",
+            error
+        );
+
+    }
+
+    return "furzo_cart_guest";
 }
+
+
 function loadCart() {
 
     try {
 
         const savedCart =
-        localStorage.getItem(getCartStorageKey());
+            localStorage.getItem(
+                getCartStorageKey()
+            );
 
         if (!savedCart) {
-
             return [];
-
         }
 
         const parsed =
             JSON.parse(savedCart);
 
-        if (!Array.isArray(parsed)) {
-
-            return [];
-
-        }
-
-        return parsed;
+        return Array.isArray(parsed)
+            ? parsed
+            : [];
 
     } catch (error) {
 
@@ -1007,8 +1096,8 @@ function saveCart() {
 
 
 /* =========================================================
-   PRODUCT FUNCTIONS
-========================================================= */
+   PRODUCT HELPERS
+   ========================================================= */
 
 function getProductById(id) {
 
@@ -1022,11 +1111,7 @@ function getProductById(id) {
 
 function getCategories() {
 
-    const categories = [
-
-        "All"
-
-    ];
+    const categories = ["All"];
 
     products.forEach(product => {
 
@@ -1051,7 +1136,7 @@ function getCategories() {
 
 /* =========================================================
    MONEY
-========================================================= */
+   ========================================================= */
 
 function formatPrice(price) {
 
@@ -1069,7 +1154,7 @@ function formatPrice(price) {
 
 /* =========================================================
    ESCAPE HTML
-========================================================= */
+   ========================================================= */
 
 function escapeHtml(value) {
 
@@ -1084,30 +1169,28 @@ function escapeHtml(value) {
 
 
 /* =========================================================
-   CART QUANTITY
-========================================================= */
+   QUANTITY
+   ========================================================= */
 
 function getQuantity(id) {
 
-    const item = cart.find(
-        cartItem =>
-            Number(cartItem.id) === Number(id)
-    );
+    const item =
+        cart.find(
+            cartItem =>
+                Number(cartItem.id) ===
+                Number(id)
+        );
 
-    if (!item) {
-
-        return 0;
-
-    }
-
-    return Number(item.quantity);
+    return item
+        ? Number(item.quantity)
+        : 0;
 
 }
 
 
 /* =========================================================
    ADD TO CART
-========================================================= */
+   ========================================================= */
 
 function addToCart(id) {
 
@@ -1124,19 +1207,18 @@ function addToCart(id) {
 
     }
 
-
     const existing =
         cart.find(
             item =>
-                Number(item.id) === Number(id)
+                Number(item.id) ===
+                Number(id)
         );
-
 
     if (existing) {
 
         if (
-            existing.quantity >=
-            product.stock
+            Number(existing.quantity) >=
+            Number(product.stock)
         ) {
 
             showToast(
@@ -1152,22 +1234,16 @@ function addToCart(id) {
     } else {
 
         cart.push({
-
             id: product.id,
-
             quantity: 1
-
         });
 
     }
 
-
     saveCart();
 
     renderProducts();
-
     renderCart();
-
     updateCartCount();
 
     showToast(
@@ -1178,8 +1254,8 @@ function addToCart(id) {
 
 
 /* =========================================================
-   REMOVE / DECREASE
-========================================================= */
+   DECREASE
+   ========================================================= */
 
 function decreaseQuantity(id) {
 
@@ -1190,16 +1266,11 @@ function decreaseQuantity(id) {
                 Number(id)
         );
 
-
     if (!item) {
-
         return;
-
     }
 
-
     item.quantity -= 1;
-
 
     if (item.quantity <= 0) {
 
@@ -1212,21 +1283,31 @@ function decreaseQuantity(id) {
 
     }
 
-
     saveCart();
 
     renderProducts();
-
     renderCart();
-
     updateCartCount();
+
+    if (selectedProduct) {
+
+        const product =
+            getProductById(
+                selectedProduct.id
+            );
+
+        if (product) {
+            openProduct(product.id);
+        }
+
+    }
 
 }
 
 
 /* =========================================================
    INCREASE
-========================================================= */
+   ========================================================= */
 
 function increaseQuantity(id) {
 
@@ -1240,13 +1321,9 @@ function increaseQuantity(id) {
                 Number(id)
         );
 
-
     if (!product || !item) {
-
         return;
-
     }
-
 
     if (
         item.quantity >=
@@ -1261,37 +1338,42 @@ function increaseQuantity(id) {
 
     }
 
-
     item.quantity += 1;
-
 
     saveCart();
 
     renderProducts();
-
     renderCart();
-
     updateCartCount();
+
+    if (selectedProduct) {
+
+        const productStill =
+            getProductById(
+                selectedProduct.id
+            );
+
+        if (productStill) {
+            openProduct(productStill.id);
+        }
+
+    }
 
 }
 
 
 /* =========================================================
    CART COUNT
-========================================================= */
+   ========================================================= */
 
 function updateCartCount() {
 
     const countElement =
         getElement("cartCount");
 
-
     if (!countElement) {
-
         return;
-
     }
-
 
     const count =
         cart.reduce(
@@ -1304,7 +1386,6 @@ function updateCartCount() {
             0
         );
 
-
     countElement.textContent =
         count;
 
@@ -1313,16 +1394,14 @@ function updateCartCount() {
 
 /* =========================================================
    PRODUCT CARD
-========================================================= */
+   ========================================================= */
 
 function createProductCard(product) {
 
     const quantity =
         getQuantity(product.id);
 
-
     let actionHtml;
-
 
     if (quantity > 0) {
 
@@ -1368,51 +1447,44 @@ function createProductCard(product) {
 
     }
 
+    const cardImage =
+        product.image
+            ? `
+                <img
+                    src="${product.image}"
+                    alt="${escapeHtml(product.name)}"
+                >
+              `
+            : product.icon;
 
     return `
 
-        <article
-            class="product-card"
-        >
+        <article class="product-card">
 
             <div
                 class="product-image"
                 data-product="${product.id}"
                 title="View ${escapeHtml(product.name)}"
             >
-                ${product.icon}
+                ${cardImage}
             </div>
 
-
-            <span
-                class="discount-badge"
-            >
+            <span class="discount-badge">
                 ${product.discount}% OFF
             </span>
 
-
-            <h3
-                class="product-name"
-            >
+            <h3 class="product-name">
                 ${escapeHtml(product.name)}
             </h3>
 
-
-            <div
-                class="product-unit"
-            >
+            <div class="product-unit">
                 ${escapeHtml(product.unit)}
                 · ⭐ ${product.rating}
             </div>
 
+            <div class="product-bottom">
 
-            <div
-                class="product-bottom"
-            >
-
-                <span
-                    class="product-price"
-                >
+                <span class="product-price">
                     ${formatPrice(product.price)}
                 </span>
 
@@ -1428,8 +1500,8 @@ function createProductCard(product) {
 
 
 /* =========================================================
-   FILTER PRODUCTS
-========================================================= */
+   FILTER
+   ========================================================= */
 
 function getFilteredProducts() {
 
@@ -1438,15 +1510,13 @@ function getFilteredProducts() {
             .trim()
             .toLowerCase();
 
-
     return products.filter(
         product => {
 
             const categoryMatch =
                 currentCategory === "All" ||
                 product.category ===
-                    currentCategory;
-
+                currentCategory;
 
             const searchMatch =
                 search === "" ||
@@ -1456,7 +1526,6 @@ function getFilteredProducts() {
                 product.category
                     .toLowerCase()
                     .includes(search);
-
 
             return (
                 categoryMatch &&
@@ -1471,32 +1540,25 @@ function getFilteredProducts() {
 
 /* =========================================================
    RENDER PRODUCTS
-========================================================= */
+   ========================================================= */
 
 function renderProducts() {
 
     const grid =
         getElement("productGrid");
 
-
     if (!grid) {
-
         return;
-
     }
-
 
     const filtered =
         getFilteredProducts();
-
 
     if (!filtered.length) {
 
         grid.innerHTML = `
 
-            <div
-                class="empty-result"
-            >
+            <div class="empty-result">
 
                 <h2>
                     No products found
@@ -1515,40 +1577,61 @@ function renderProducts() {
 
     }
 
-
     grid.innerHTML =
         filtered
-            .map(
-                product =>
-                    createProductCard(
-                        product
-                    )
-            )
+            .map(createProductCard)
             .join("");
 
 }
 
 
 /* =========================================================
+   CATEGORY ICONS
+   ========================================================= */
+
+function getCategoryIcon(category) {
+
+    const icons = {
+
+        "All": "🛍️",
+        "Fruits": "🍎",
+        "Vegetables": "🥕",
+        "Fruits & Vegetables": "🍎",
+        "Dairy & Breakfast": "🥛",
+        "Munchies": "🍿",
+        "Cold Drinks & Juices": "🥤",
+        "Instant & Frozen Food": "🍜",
+        "Tea, Coffee & Health Drink": "☕",
+        "Bakery & Biscuits": "🍪",
+        "Sweet Tooth": "🍫",
+        "Staples": "🌾",
+        "Cleaning Essentials": "🧹",
+        "Personal Care": "🧴",
+        "Baby Care": "👶",
+        "Pet Care": "🐶"
+
+    };
+
+    return icons[category] || "🛒";
+
+}
+
+
+/* =========================================================
    CATEGORY RENDER
-========================================================= */
+   ========================================================= */
 
 function renderCategories() {
 
     const categoryBar =
         getElement("categoryBar");
 
-
     if (!categoryBar) {
-
         return;
-
     }
-
 
     const categories =
         getCategories();
-
 
     categoryBar.innerHTML =
         categories
@@ -1560,7 +1643,6 @@ function renderCategories() {
                         currentCategory
                             ? "active"
                             : "";
-
 
                     return `
 
@@ -1583,54 +1665,8 @@ function renderCategories() {
 
 
 /* =========================================================
-   CATEGORY ICON
-========================================================= */
-
-function getCategoryIcon(category) {
-
-    const icons = {
-
-        "All": "🛍️",
-
-        "Fruits & Vegetables": "🍎",
-
-        "Dairy & Breakfast": "🥛",
-
-        "Munchies": "🍿",
-
-        "Cold Drinks & Juices": "🥤",
-
-        "Instant & Frozen Food": "🍜",
-
-        "Tea, Coffee & Health Drink": "☕",
-
-        "Bakery & Biscuits": "🍪",
-
-        "Sweet Tooth": "🍫",
-
-        "Staples": "🌾",
-
-        "Cleaning Essentials": "🧹",
-
-        "Home & Kitchen": "🏠",
-
-        "Personal Care": "🧴",
-
-        "Baby Care": "👶",
-
-        "Pet Care": "🐶"
-
-    };
-
-
-    return icons[category] || "🛒";
-
-}
-
-
-/* =========================================================
-   CART TOTAL
-========================================================= */
+   SUBTOTAL
+   ========================================================= */
 
 function getSubtotal() {
 
@@ -1641,22 +1677,16 @@ function getSubtotal() {
         ) => {
 
             const product =
-                getProductById(
-                    item.id
-                );
-
+                getProductById(item.id);
 
             if (!product) {
-
                 return total;
-
             }
-
 
             return (
                 total +
                 product.price *
-                item.quantity
+                Number(item.quantity)
             );
 
         },
@@ -1666,30 +1696,31 @@ function getSubtotal() {
 }
 
 
+/* =========================================================
+   DELIVERY
+   ========================================================= */
+
 function getDeliveryFee() {
 
     const subtotal =
         getSubtotal();
 
-
     if (subtotal === 0) {
-
         return 0;
-
     }
-
 
     if (subtotal >= 499) {
-
         return 0;
-
     }
-
 
     return 30;
 
 }
 
+
+/* =========================================================
+   GRAND TOTAL
+   ========================================================= */
 
 function getGrandTotal() {
 
@@ -1702,48 +1733,54 @@ function getGrandTotal() {
 
 
 /* =========================================================
-   CART ITEM HTML
-========================================================= */
+   CART ITEM
+   ========================================================= */
 
 function createCartItem(item) {
 
     const product =
         getProductById(item.id);
 
-
     if (!product) {
-
         return "";
-
     }
-
 
     const total =
         product.price *
-        item.quantity;
+        Number(item.quantity);
 
+    const images =
+        getProductImages(product);
+
+    const imageHtml =
+        images.length
+            ? `
+                <img
+                    src="${images[0]}"
+                    alt="${escapeHtml(product.name)}"
+                    style="
+                        width:55px;
+                        height:55px;
+                        object-fit:contain;
+                        border-radius:10px;
+                    "
+                >
+              `
+            : product.icon;
 
     return `
 
-        <div
-            class="cart-item"
-        >
+        <div class="cart-item">
 
-            <div
-                class="cart-item-icon"
-            >
-                ${product.icon}
+            <div class="cart-item-icon">
+                ${imageHtml}
             </div>
-
 
             <div>
 
-                <div
-                    class="cart-item-name"
-                >
+                <div class="cart-item-name">
                     ${escapeHtml(product.name)}
                 </div>
-
 
                 <small>
                     ${escapeHtml(product.unit)}
@@ -1751,10 +1788,7 @@ function createCartItem(item) {
                     ${formatPrice(product.price)}
                 </small>
 
-
-                <div
-                    class="cart-quantity"
-                >
+                <div class="cart-quantity">
 
                     <button
                         type="button"
@@ -1778,10 +1812,7 @@ function createCartItem(item) {
 
             </div>
 
-
-            <div
-                class="cart-item-price"
-            >
+            <div class="cart-item-price">
                 ${formatPrice(total)}
             </div>
 
@@ -1794,24 +1825,19 @@ function createCartItem(item) {
 
 /* =========================================================
    RENDER CART
-========================================================= */
+   ========================================================= */
 
 function renderCart() {
 
     const itemsElement =
         getElement("cartItems");
 
-
     const summaryElement =
         getElement("cartSummary");
 
-
     if (!itemsElement) {
-
         return;
-
     }
-
 
     if (!cart.length) {
 
@@ -1847,48 +1873,34 @@ function renderCart() {
 
         `;
 
-
         if (summaryElement) {
-
-            summaryElement.innerHTML =
-                "";
-
+            summaryElement.innerHTML = "";
         }
-
 
         return;
 
     }
 
-
     itemsElement.innerHTML =
         cart
-            .map(
-                item =>
-                    createCartItem(item)
-            )
+            .map(createCartItem)
             .join("");
-
 
     const subtotal =
         getSubtotal();
 
-
     const delivery =
         getDeliveryFee();
 
-
     const total =
         getGrandTotal();
-
 
     if (summaryElement) {
 
         summaryElement.innerHTML = `
 
-            <div
-                class="summary-row"
-            >
+            <div class="summary-row">
+
                 <span>
                     Subtotal
                 </span>
@@ -1896,12 +1908,11 @@ function renderCart() {
                 <strong>
                     ${formatPrice(subtotal)}
                 </strong>
+
             </div>
 
+            <div class="summary-row">
 
-            <div
-                class="summary-row"
-            >
                 <span>
                     Delivery
                 </span>
@@ -1913,12 +1924,13 @@ function renderCart() {
                             : formatPrice(delivery)
                     }
                 </strong>
-            </div>
 
+            </div>
 
             <div
                 class="summary-row summary-total"
             >
+
                 <span>
                     Total
                 </span>
@@ -1926,8 +1938,8 @@ function renderCart() {
                 <strong>
                     ${formatPrice(total)}
                 </strong>
-            </div>
 
+            </div>
 
             <button
                 type="button"
@@ -1945,8 +1957,8 @@ function renderCart() {
 
 
 /* =========================================================
-   OPEN CART
-========================================================= */
+   CART OPEN
+   ========================================================= */
 
 function openCart() {
 
@@ -1955,12 +1967,9 @@ function openCart() {
     const overlay =
         getElement("cartOverlay");
 
-
     if (overlay) {
 
-        overlay.classList.add(
-            "open"
-        );
+        overlay.classList.add("open");
 
     }
 
@@ -1968,20 +1977,17 @@ function openCart() {
 
 
 /* =========================================================
-   CLOSE CART
-========================================================= */
+   CART CLOSE
+   ========================================================= */
 
 function closeCart() {
 
     const overlay =
         getElement("cartOverlay");
 
-
     if (overlay) {
 
-        overlay.classList.remove(
-            "open"
-        );
+        overlay.classList.remove("open");
 
     }
 
@@ -1989,40 +1995,65 @@ function closeCart() {
 
 
 /* =========================================================
-   PRODUCT DETAIL
-========================================================= */
+   PRODUCT POPUP
+   ========================================================= */
 
 function openProduct(id) {
 
     const product =
         getProductById(id);
 
-
     if (!product) {
-
         return;
-
     }
-
 
     selectedProduct =
         product;
 
-
     const detail =
         getElement("productDetail");
 
-
     if (!detail) {
-
         return;
-
     }
-
 
     const quantity =
         getQuantity(product.id);
 
+    const images =
+        getProductImages(product);
+
+    const firstImage =
+        images[0] || null;
+
+
+    /* =====================================================
+       MAIN IMAGE
+       ===================================================== */
+
+    const mainImage =
+        firstImage
+
+            ? `
+                <img
+                    src="${firstImage}"
+                    alt="${escapeHtml(product.name)}"
+                    class="furzo-main-product-img"
+                >
+              `
+
+            : `
+                <div
+                    class="furzo-icon-fallback"
+                >
+                    ${product.icon}
+                </div>
+              `;
+
+
+    /* =====================================================
+       BUTTON
+       ===================================================== */
 
     const buttonHtml =
         quantity > 0
@@ -2031,7 +2062,11 @@ function openProduct(id) {
 
                 <div
                     class="quantity-control"
-                    style="margin-top:15px;"
+                    style="
+                        width:100%;
+                        height:52px;
+                        border-radius:8px;
+                    "
                 >
 
                     <button
@@ -2054,7 +2089,7 @@ function openProduct(id) {
 
                 </div>
 
-            `
+              `
 
             : `
 
@@ -2062,77 +2097,150 @@ function openProduct(id) {
                     type="button"
                     class="checkout-button"
                     data-detail-add="${product.id}"
+                    style="
+                        margin-top:20px;
+                        width:100%;
+                        height:52px;
+                        font-size:16px;
+                        border-radius:8px;
+                    "
                 >
-                    ADD TO CART
+                    Add to basket
+                </button>
+
+              `;
+
+
+    /* =====================================================
+       THUMBNAILS
+       ===================================================== */
+
+    let thumbnailsHtml = "";
+
+    for (
+        let index = 0;
+        index < 4;
+        index++
+    ) {
+
+        const thumbnailImage =
+            getImageForIndex(
+                product,
+                index
+            );
+
+        if (thumbnailImage) {
+
+            thumbnailsHtml += `
+
+                <button
+                    type="button"
+                    class="furzo-thumbnail ${
+                        index === 0
+                            ? "active"
+                            : ""
+                    }"
+                    data-thumbnail-index="${index}"
+                >
+
+                    <img
+                        src="${thumbnailImage}"
+                        alt="${escapeHtml(product.name)} ${index + 1}"
+                    >
+
                 </button>
 
             `;
 
+        } else {
+
+            thumbnailsHtml += `
+
+                <button
+                    type="button"
+                    class="furzo-thumbnail ${
+                        index === 0
+                            ? "active"
+                            : ""
+                    }"
+                    data-thumbnail-index="${index}"
+                >
+                    ${product.icon}
+                </button>
+
+            `;
+
+        }
+
+    }
+
+
+    /* =====================================================
+       POPUP HTML
+       ===================================================== */
 
     detail.innerHTML = `
 
-        <div
-            class="product-detail"
-        >
+        <div class="furzo-product-detail">
 
-            <div>
 
-                <div
-                    class="main-product-image"
-                    id="mainProductImage"
-                >
-                    ${product.icon}
+            <!-- LEFT -->
+
+            <div class="furzo-gallery">
+
+                <div class="furzo-thumbnails">
+
+                    ${thumbnailsHtml}
+
                 </div>
 
 
-                <div
-                    class="image-gallery"
-                >
+                <div class="furzo-main-image-wrap">
 
-                    <button
-                        type="button"
-                        class="gallery-button"
-                        data-gallery-icon="${product.icon}"
+                    <div
+                        class="furzo-main-image"
+                        id="mainProductImage"
                     >
-                        ${product.icon}
-                    </button>
 
-                    <button
-                        type="button"
-                        class="gallery-button"
-                        data-gallery-icon="🛍️"
-                    >
-                        🛍️
-                    </button>
+                        ${mainImage}
 
-                    <button
-                        type="button"
-                        class="gallery-button"
-                        data-gallery-icon="📦"
-                    >
-                        📦
-                    </button>
+                    </div>
 
-                    <button
-                        type="button"
-                        class="gallery-button"
-                        data-gallery-icon="✨"
-                    >
-                        ✨
-                    </button>
+
+                    ${
+                        firstImage
+                            ? `
+
+                                <div
+                                    class="furzo-zoom-box"
+                                    id="furzoZoomBox"
+                                    aria-hidden="true"
+                                >
+
+                                    <img
+                                        src="${firstImage}"
+                                        alt="${escapeHtml(product.name)} zoom"
+                                    >
+
+                                </div>
+
+                              `
+                            : ""
+                    }
 
                 </div>
 
             </div>
 
 
-            <div>
+            <!-- RIGHT -->
 
-                <span
-                    class="discount-badge"
-                >
-                    ${product.discount}% OFF
-                </span>
+            <div class="furzo-product-info">
+
+
+                <div class="furzo-brand">
+                    Furzo Fresh
+                </div>
 
 
                 <h1>
@@ -2140,98 +2248,464 @@ function openProduct(id) {
                 </h1>
 
 
-                <p
-                    class="detail-description"
-                >
-                    ${escapeHtml(product.description)}
-                </p>
+                <div class="furzo-delivery-badge">
+                    ⚡ Delivery in 10 mins
+                </div>
 
 
-                <p>
+                <div class="furzo-rating">
+
+                    ⭐ ${product.rating}
+
+                    <span>
+                        • ${product.stock} in stock
+                    </span>
+
+                </div>
+
+
+                <div class="furzo-price-box">
+
+
+                    <div class="furzo-mrp">
+
+                        MRP:
+
+                        <span>
+                            ${formatPrice(
+                                Math.round(
+                                    product.price * 1.20
+                                )
+                            )}
+                        </span>
+
+                    </div>
+
+
+                    <div class="furzo-price">
+                        ${formatPrice(product.price)}
+                    </div>
+
+
+                    <div class="furzo-saving">
+
+                        You Save:
+
+                        <strong>
+                            ${product.discount}%
+                        </strong>
+
+                    </div>
+
+
+                    <div class="furzo-tax">
+                        Inclusive of all taxes
+                    </div>
+
+
+                </div>
+
+
+                <div class="furzo-pack">
+
                     <strong>
                         Pack:
                     </strong>
 
                     ${escapeHtml(product.unit)}
-                </p>
 
-
-                <p
-                    style="margin-top:8px;"
-                >
-                    <strong>
-                        Rating:
-                    </strong>
-
-                    ⭐ ${product.rating}
-                </p>
-
-
-                <p
-                    style="margin-top:8px;"
-                >
-                    <strong>
-                        Stock:
-                    </strong>
-
-                    ${product.stock} available
-                </p>
-
-
-                <div
-                    class="detail-price"
-                >
-                    ${formatPrice(product.price)}
                 </div>
 
 
-                <div
-                    id="detailControls"
-                >
-                    ${buttonHtml}
+                <p class="furzo-description">
+
+                    ${escapeHtml(
+                        product.description
+                    )}
+
+                </p>
+
+
+                <div class="furzo-action-row">
+
+
+                    <div style="flex:1;">
+
+                        ${buttonHtml}
+
+                    </div>
+
+
+                    <button
+                        type="button"
+                        class="furzo-wishlist"
+                        id="furzoWishlistButton"
+                    >
+
+                        ♡
+                        <span>
+                            Wishlist
+                        </span>
+
+                    </button>
+
+
                 </div>
 
 
-                <button
-                    type="button"
-                    class="view-all"
-                    style="margin-top:12px;"
-                    data-buy-now="${product.id}"
-                >
-                    Buy now
-                </button>
+                <div class="furzo-extra-info">
+
+                    <div>
+                        🚚 Fast delivery
+                    </div>
+
+                    <div>
+                        🛡️ Quality assured
+                    </div>
+
+                    <div>
+                        🔄 Easy support
+                    </div>
+
+                </div>
+
 
             </div>
+
 
         </div>
 
     `;
 
 
+    /* =====================================================
+       POPUP OPEN
+       ===================================================== */
+
     const overlay =
         getElement("productOverlay");
 
-
     if (overlay) {
 
-        overlay.classList.add(
-            "open"
+        overlay.classList.add("open");
+
+        overlay.setAttribute(
+            "aria-hidden",
+            "false"
         );
 
     }
+
+
+    /* =====================================================
+       THUMBNAIL CLICK
+       ===================================================== */
+
+    const thumbnails =
+        detail.querySelectorAll(
+            ".furzo-thumbnail"
+        );
+
+    const mainImageElement =
+        getElement(
+            "mainProductImage"
+        );
+
+    thumbnails.forEach(
+        thumbnail => {
+
+            thumbnail.addEventListener(
+                "click",
+                function() {
+
+                    thumbnails.forEach(
+                        item => {
+
+                            item.classList.remove(
+                                "active"
+                            );
+
+                        }
+                    );
+
+
+                    thumbnail.classList.add(
+                        "active"
+                    );
+
+
+                    const index =
+                        Number(
+                            thumbnail.dataset
+                                .thumbnailIndex
+                        );
+
+
+                    const selectedImage =
+                        getImageForIndex(
+                            product,
+                            index
+                        );
+
+
+                    if (
+                        mainImageElement &&
+                        selectedImage
+                    ) {
+
+                        mainImageElement.innerHTML = `
+
+                            <img
+                                src="${selectedImage}"
+                                alt="${escapeHtml(product.name)}"
+                                class="furzo-main-product-img"
+                            >
+
+                        `;
+
+                    }
+
+
+                    refreshFurzoZoom();
+
+                }
+
+            );
+
+        }
+    );
+
+
+    /* =====================================================
+       WISHLIST
+       ===================================================== */
+
+    const wishlistButton =
+        getElement(
+            "furzoWishlistButton"
+        );
+
+    if (wishlistButton) {
+
+        wishlistButton.addEventListener(
+            "click",
+            function() {
+
+                showToast(
+                    "Added to wishlist"
+                );
+
+            }
+        );
+
+    }
+
+
+    /* =====================================================
+       START ZOOM
+       ===================================================== */
+
+    setupFurzoZoom();
+
+}
+
+
+/* =========================================================
+   ZOOM
+   ========================================================= */
+
+function setupFurzoZoom() {
+
+    const wrap =
+        document.querySelector(
+            ".furzo-main-image-wrap"
+        );
+
+    if (!wrap) {
+        return;
+    }
+
+    const image =
+        wrap.querySelector(
+            ".furzo-main-product-img"
+        );
+
+    const zoomBox =
+        wrap.querySelector(
+            ".furzo-zoom-box"
+        );
+
+    if (
+        !image ||
+        !zoomBox
+    ) {
+
+        return;
+
+    }
+
+    const zoomImg =
+        zoomBox.querySelector(
+            "img"
+        );
+
+    if (!zoomImg) {
+        return;
+    }
+
+
+    zoomImg.style.display =
+        "none";
+
+    zoomBox.style.backgroundImage =
+        `url("${image.src}")`;
+
+    zoomBox.style.backgroundRepeat =
+        "no-repeat";
+
+    zoomBox.style.backgroundSize =
+        "200% 200%";
+
+    zoomBox.style.backgroundPosition =
+        "50% 50%";
+
+    zoomBox.style.display =
+        "none";
+
+
+    wrap.onmousemove =
+        function(event) {
+
+            const rect =
+                image.getBoundingClientRect();
+
+            if (
+                rect.width <= 0 ||
+                rect.height <= 0
+            ) {
+
+                return;
+
+            }
+
+
+            let x =
+                event.clientX -
+                rect.left;
+
+            let y =
+                event.clientY -
+                rect.top;
+
+
+            x =
+                Math.max(
+                    0,
+                    Math.min(
+                        rect.width,
+                        x
+                    )
+                );
+
+
+            y =
+                Math.max(
+                    0,
+                    Math.min(
+                        rect.height,
+                        y
+                    )
+                );
+
+
+            const percentX =
+                (x / rect.width) * 100;
+
+            const percentY =
+                (y / rect.height) * 100;
+
+
+            zoomBox.style.backgroundImage =
+                `url("${image.src}")`;
+
+            zoomBox.style.backgroundPosition =
+                `${percentX}% ${percentY}%`;
+
+            zoomBox.style.display =
+                "block";
+
+        };
+
+
+    wrap.onmouseleave =
+        function() {
+
+            zoomBox.style.display =
+                "none";
+
+        };
+
+}
+
+
+/* =========================================================
+   REFRESH ZOOM
+   ========================================================= */
+
+function refreshFurzoZoom() {
+
+    const wrap =
+        document.querySelector(
+            ".furzo-main-image-wrap"
+        );
+
+    if (!wrap) {
+        return;
+    }
+
+    const image =
+        wrap.querySelector(
+            ".furzo-main-product-img"
+        );
+
+    const zoomBox =
+        wrap.querySelector(
+            ".furzo-zoom-box"
+        );
+
+    if (
+        !image ||
+        !zoomBox
+    ) {
+
+        return;
+
+    }
+
+    zoomBox.style.backgroundImage =
+        `url("${image.src}")`;
+
+    zoomBox.style.backgroundSize =
+        "200% 200%";
+
+    zoomBox.style.backgroundPosition =
+        "50% 50%";
+
+    setupFurzoZoom();
 
 }
 
 
 /* =========================================================
    CLOSE PRODUCT
-========================================================= */
+   ========================================================= */
 
 function closeProduct() {
 
     const overlay =
-        getElement("productOverlay");
-
+        getElement(
+            "productOverlay"
+        );
 
     if (overlay) {
 
@@ -2239,14 +2713,22 @@ function closeProduct() {
             "open"
         );
 
+        overlay.setAttribute(
+            "aria-hidden",
+            "true"
+        );
+
     }
+
+    selectedProduct =
+        null;
 
 }
 
 
 /* =========================================================
    CHECKOUT
-========================================================= */
+   ========================================================= */
 
 function openCheckout() {
 
@@ -2260,10 +2742,10 @@ function openCheckout() {
 
     }
 
-
     const overlay =
-        getElement("checkoutOverlay");
-
+        getElement(
+            "checkoutOverlay"
+        );
 
     if (overlay) {
 
@@ -2279,8 +2761,9 @@ function openCheckout() {
 function closeCheckout() {
 
     const overlay =
-        getElement("checkoutOverlay");
-
+        getElement(
+            "checkoutOverlay"
+        );
 
     if (overlay) {
 
@@ -2294,13 +2777,46 @@ function closeCheckout() {
 
 
 /* =========================================================
+   SAVE ORDER
+   ========================================================= */
+
+function saveOrder(order) {
+
+    try {
+
+        const orders =
+            JSON.parse(
+                localStorage.getItem(
+                    ORDER_STORAGE_KEY
+                ) || "[]"
+            );
+
+        orders.push(order);
+
+        localStorage.setItem(
+            ORDER_STORAGE_KEY,
+            JSON.stringify(orders)
+        );
+
+    } catch (error) {
+
+        console.error(
+            "Order save error:",
+            error
+        );
+
+    }
+
+}
+
+
+/* =========================================================
    PLACE ORDER
-========================================================= */
+   ========================================================= */
 
 function placeOrder(event) {
 
     event.preventDefault();
-
 
     if (!cart.length) {
 
@@ -2312,14 +2828,11 @@ function placeOrder(event) {
 
     }
 
-
     const form =
         event.currentTarget;
 
-
     const formData =
         new FormData(form);
-
 
     const customer = {
 
@@ -2337,7 +2850,6 @@ function placeOrder(event) {
 
     };
 
-
     const order = {
 
         id:
@@ -2347,18 +2859,18 @@ function placeOrder(event) {
                 .slice(-8),
 
         customer:
-
             customer,
 
         items:
-
             cart.map(
                 item => ({
+
                     id:
                         item.id,
 
                     quantity:
                         item.quantity
+
                 })
             ),
 
@@ -2377,30 +2889,21 @@ function placeOrder(event) {
 
     };
 
-
     saveOrder(order);
 
-
     cart = [];
-
 
     saveCart();
 
     renderProducts();
-
     renderCart();
-
     updateCartCount();
 
     closeCheckout();
-
     closeCart();
-
     closeProduct();
 
-
     form.reset();
-
 
     showToast(
         `Order ${order.id} placed successfully`
@@ -2410,46 +2913,8 @@ function placeOrder(event) {
 
 
 /* =========================================================
-   SAVE ORDER
-========================================================= */
-
-function saveOrder(order) {
-
-    try {
-
-        const oldOrders =
-            JSON.parse(
-                localStorage.getItem(
-                    ORDER_STORAGE_KEY
-                ) || "[]"
-            );
-
-
-        oldOrders.push(order);
-
-
-        localStorage.setItem(
-            ORDER_STORAGE_KEY,
-            JSON.stringify(
-                oldOrders
-            )
-        );
-
-    } catch (error) {
-
-        console.error(
-            "Order saving error:",
-            error
-        );
-
-    }
-
-}
-
-
-/* =========================================================
    ADDRESS
-========================================================= */
+   ========================================================= */
 
 function changeAddress() {
 
@@ -2458,24 +2923,18 @@ function changeAddress() {
             ADDRESS_STORAGE_KEY
         ) || "";
 
-
     const address =
         window.prompt(
             "Enter your delivery address:",
             oldAddress
         );
 
-
     if (address === null) {
-
         return;
-
     }
-
 
     const cleaned =
         address.trim();
-
 
     if (!cleaned) {
 
@@ -2487,15 +2946,12 @@ function changeAddress() {
 
     }
 
-
     localStorage.setItem(
         ADDRESS_STORAGE_KEY,
         cleaned
     );
 
-
     updateAddress();
-
 
     showToast(
         "Delivery address saved"
@@ -2507,21 +2963,18 @@ function changeAddress() {
 function updateAddress() {
 
     const addressElement =
-        getElement("addressText");
-
+        getElement(
+            "addressText"
+        );
 
     if (!addressElement) {
-
         return;
-
     }
-
 
     const address =
         localStorage.getItem(
             ADDRESS_STORAGE_KEY
         );
-
 
     if (!address) {
 
@@ -2532,62 +2985,41 @@ function updateAddress() {
 
     }
 
-
-    if (address.length > 30) {
-
-        addressElement.textContent =
-            address.substring(
-                0,
-                30
-            ) + "...";
-
-    } else {
-
-        addressElement.textContent =
-            address;
-
-    }
+    addressElement.textContent =
+        address.length > 30
+            ? address.substring(0, 30) + "..."
+            : address;
 
 }
 
 
 /* =========================================================
    TOAST
-========================================================= */
-
-let toastTimer = null;
-
+   ========================================================= */
 
 function showToast(message) {
 
     const toast =
         getElement("toast");
 
-
     if (!toast) {
-
         return;
-
     }
-
 
     toast.textContent =
         message;
-
 
     toast.classList.add(
         "show"
     );
 
-
     clearTimeout(
         toastTimer
     );
 
-
     toastTimer =
         setTimeout(
-            () => {
+            function() {
 
                 toast.classList.remove(
                     "show"
@@ -2602,24 +3034,21 @@ function showToast(message) {
 
 /* =========================================================
    SEARCH
-========================================================= */
+   ========================================================= */
 
 function performSearch() {
 
     const input =
-        getElement("searchInput");
-
+        getElement(
+            "searchInput"
+        );
 
     if (!input) {
-
         return;
-
     }
-
 
     currentSearch =
         input.value;
-
 
     renderProducts();
 
@@ -2627,409 +3056,81 @@ function performSearch() {
 
 
 /* =========================================================
-   EVENTS
-========================================================= */
+   PROFILE
+   ========================================================= */
 
-
-/*
-    ADD BUTTON
-*/
-
-document.addEventListener(
-    "click",
-    function(event) {
-
-        const addButton =
-            event.target.closest(
-                "[data-add]"
-            );
-
-
-        if (addButton) {
-
-            const id =
-                Number(
-                    addButton.dataset.add
-                );
-
-
-            addToCart(id);
-
-            return;
-
-        }
-
-
-        /*
-            PRODUCT IMAGE
-        */
-
-        const productImage =
-            event.target.closest(
-                "[data-product]"
-            );
-
-
-        if (productImage) {
-
-            const id =
-                Number(
-                    productImage.dataset.product
-                );
-
-
-            openProduct(id);
-
-            return;
-
-        }
-
-
-        /*
-            PLUS
-        */
-
-        const plusButton =
-            event.target.closest(
-                "[data-plus]"
-            );
-
-
-        if (plusButton) {
-
-            increaseQuantity(
-                Number(
-                    plusButton.dataset.plus
-                )
-            );
-
-            return;
-
-        }
-
-
-        /*
-            MINUS
-        */
-
-        const minusButton =
-            event.target.closest(
-                "[data-minus]"
-            );
-
-
-        if (minusButton) {
-
-            decreaseQuantity(
-                Number(
-                    minusButton.dataset.minus
-                )
-            );
-
-            return;
-
-        }
-
-
-        /*
-            CART PLUS
-        */
-
-        const cartPlus =
-            event.target.closest(
-                "[data-cart-plus]"
-            );
-
-
-        if (cartPlus) {
-
-            increaseQuantity(
-                Number(
-                    cartPlus.dataset.cartPlus
-                )
-            );
-
-            return;
-
-        }
-
-
-        /*
-            CART MINUS
-        */
-
-        const cartMinus =
-            event.target.closest(
-                "[data-cart-minus]"
-            );
-
-
-        if (cartMinus) {
-
-            decreaseQuantity(
-                Number(
-                    cartMinus.dataset.cartMinus
-                )
-            );
-
-            return;
-
-        }
-
-
-        /*
-            CATEGORY
-        */
-
-        const categoryButton =
-            event.target.closest(
-                "[data-category]"
-            );
-
-
-        if (categoryButton) {
-
-            currentCategory =
-                categoryButton.dataset.category;
-
-
-            renderCategories();
-
-            renderProducts();
-
-
-            window.scrollTo({
-
-                top: 0,
-
-                behavior: "smooth"
-
-            });
-
-
-            return;
-
-        }
-
-
-        /*
-            DETAIL ADD
-        */
-
-        const detailAdd =
-            event.target.closest(
-                "[data-detail-add]"
-            );
-
-
-        if (detailAdd) {
-
-            addToCart(
-                Number(
-                    detailAdd.dataset.detailAdd
-                )
-            );
-
-
-            openProduct(
-                Number(
-                    detailAdd.dataset.detailAdd
-                )
-            );
-
-
-            return;
-
-        }
-
-
-        /*
-            DETAIL PLUS
-        */
-
-        const detailPlus =
-            event.target.closest(
-                "[data-detail-plus]"
-            );
-
-
-        if (detailPlus) {
-
-            increaseQuantity(
-                Number(
-                    detailPlus.dataset.detailPlus
-                )
-            );
-
-
-            openProduct(
-                Number(
-                    detailPlus.dataset.detailPlus
-                )
-            );
-
-
-            return;
-
-        }
-
-
-        /*
-            DETAIL MINUS
-        */
-
-        const detailMinus =
-            event.target.closest(
-                "[data-detail-minus]"
-            );
-
-
-        if (detailMinus) {
-
-            decreaseQuantity(
-                Number(
-                    detailMinus.dataset.detailMinus
-                )
-            );
-
-
-            openProduct(
-                Number(
-                    detailMinus.dataset.detailMinus
-                )
-            );
-
-
-            return;
-
-        }
-
-
-        /*
-            BUY NOW
-        */
-
-        const buyNow =
-            event.target.closest(
-                "[data-buy-now]"
-            );
-
-
-        if (buyNow) {
-
-            const id =
-                Number(
-                    buyNow.dataset.buyNow
-                );
-
-
-            if (
-                getQuantity(id) === 0
-            ) {
-
-                addToCart(id);
-
-            }
-
-
-            closeProduct();
-
-            openCheckout();
-
-            return;
-
-        }
-
-
-        /*
-            GALLERY IMAGE
-        */
-
-        const gallery =
-            event.target.closest(
-                "[data-gallery-icon]"
-            );
-
-
-        if (gallery) {
-
-            const mainImage =
-                getElement(
-                    "mainProductImage"
-                );
-
-
-            if (mainImage) {
-
-                mainImage.textContent =
-                    gallery.dataset.galleryIcon;
-
-            }
-
-
-            return;
-
-        }
-
-
-        /*
-            CHECKOUT
-        */
-
-        if (
-            event.target.id ===
-            "checkoutButton"
-        ) {
-
-            openCheckout();
-
-            return;
-
-        }
-
-    }
-);
 function openProfile() {
 
     const userData =
-        localStorage.getItem("furzo_user");
+        localStorage.getItem(
+            "furzo_user"
+        );
 
     if (!userData) {
-        showToast("Please login first");
+
+        showToast(
+            "Please login first"
+        );
+
         return;
+
     }
 
-    const user =
-        JSON.parse(userData);
+    let user;
+
+    try {
+
+        user =
+            JSON.parse(
+                userData
+            );
+
+    } catch (error) {
+
+        showToast(
+            "Profile data error"
+        );
+
+        return;
+
+    }
 
     const oldProfile =
-        document.getElementById("profileOverlay");
+        getElement(
+            "profileOverlay"
+        );
 
     if (oldProfile) {
         oldProfile.remove();
     }
 
     const overlay =
-        document.createElement("div");
+        document.createElement(
+            "div"
+        );
 
-    overlay.id = "profileOverlay";
-    overlay.className = "overlay open";
+    overlay.id =
+        "profileOverlay";
+
+    overlay.className =
+        "overlay open";
 
     overlay.innerHTML = `
 
-        <div style="
-            background:#fff;
-            width:min(420px,92vw);
-            border-radius:22px;
-            padding:28px;
-            position:relative;
-            box-shadow:0 20px 60px rgba(0,0,0,.18);
-        ">
+        <div
+            style="
+                background:#fff;
+                width:min(420px,92vw);
+                border-radius:22px;
+                padding:28px;
+                position:relative;
+                box-shadow:0 20px 60px rgba(0,0,0,.18);
+            "
+        >
 
             <button
                 type="button"
                 id="closeProfileButton"
-                onclick="document.getElementById('profileOverlay').remove()"
                 style="
                     position:absolute;
                     right:16px;
@@ -3046,245 +3147,368 @@ function openProfile() {
                 ×
             </button>
 
-            <h2 style="
-                margin:0 0 8px;
-                font-size:28px;
-            ">
+            <h2>
                 My Profile
             </h2>
 
-            <p style="
-                margin:0 0 24px;
-                color:#777;
-            ">
+            <p style="color:#777;">
                 Your Furzo account details
             </p>
 
-            <div style="
-                background:#f7f7f7;
-                border-radius:16px;
-                padding:18px;
-                margin-bottom:12px;
-            ">
-                <div style="
-                    font-size:12px;
-                    color:#777;
-                    margin-bottom:5px;
-                ">
+            <div
+                style="
+                    background:#f7f7f7;
+                    border-radius:16px;
+                    padding:18px;
+                    margin-top:15px;
+                "
+            >
+
+                <div
+                    style="
+                        font-size:12px;
+                        color:#777;
+                    "
+                >
                     Name
                 </div>
 
-                <div style="
-                    font-size:17px;
-                    font-weight:700;
-                ">
-                    ${user.name}
+                <div
+                    style="
+                        font-size:17px;
+                        font-weight:700;
+                    "
+                >
+                    ${escapeHtml(
+                        user.name || ""
+                    )}
                 </div>
+
             </div>
 
-            <div style="
-                background:#f7f7f7;
-                border-radius:16px;
-                padding:18px;
-            ">
-                <div style="
-                    font-size:12px;
-                    color:#777;
-                    margin-bottom:5px;
-                ">
+
+            <div
+                style="
+                    background:#f7f7f7;
+                    border-radius:16px;
+                    padding:18px;
+                    margin-top:12px;
+                "
+            >
+
+                <div
+                    style="
+                        font-size:12px;
+                        color:#777;
+                    "
+                >
                     Mobile Number
                 </div>
 
-                <div style="
-                    font-size:17px;
-                    font-weight:700;
-                ">
-                    ${user.phone}
+                <div
+                    style="
+                        font-size:17px;
+                        font-weight:700;
+                    "
+                >
+                    ${escapeHtml(
+                        user.phone || ""
+                    )}
                 </div>
+
             </div>
 
         </div>
 
     `;
 
-    document.body.appendChild(overlay);
+    document.body.appendChild(
+        overlay
+    );
 
-    document
-        .getElementById("closeProfileButton")
-        .addEventListener(
-            "click",
-            () => overlay.remove()
+    const closeButton =
+        getElement(
+            "closeProfileButton"
         );
+
+    if (closeButton) {
+
+        closeButton.addEventListener(
+            "click",
+            function() {
+                overlay.remove();
+            }
+        );
+
+    }
 
     overlay.addEventListener(
         "click",
         function(event) {
-            if (event.target === overlay) {
+
+            if (
+                event.target === overlay
+            ) {
                 overlay.remove();
             }
+
         }
     );
+
 }
+
+
 /* =========================================================
-   MY ORDERS
-========================================================= */
+   ORDERS
+   ========================================================= */
 
 function openOrders() {
 
-    const orders = JSON.parse(
-        localStorage.getItem(ORDER_STORAGE_KEY) || "[]"
-    );
+    let orders = [];
 
-    const oldOverlay = document.getElementById("ordersOverlay");
+    try {
+
+        orders =
+            JSON.parse(
+                localStorage.getItem(
+                    ORDER_STORAGE_KEY
+                ) || "[]"
+            );
+
+        if (!Array.isArray(orders)) {
+            orders = [];
+        }
+
+    } catch (error) {
+
+        orders = [];
+
+    }
+
+    const oldOverlay =
+        getElement(
+            "ordersOverlay"
+        );
 
     if (oldOverlay) {
         oldOverlay.remove();
     }
 
-    const overlay = document.createElement("div");
+    const overlay =
+        document.createElement(
+            "div"
+        );
 
-    overlay.id = "ordersOverlay";
-    overlay.className = "overlay open";
+    overlay.id =
+        "ordersOverlay";
+
+    overlay.className =
+        "overlay open";
 
     let ordersHTML = "";
 
     if (!orders.length) {
 
         ordersHTML = `
-            <div style="
-                text-align:center;
-                padding:50px 20px;
-            ">
-                <div style="font-size:60px;">📦</div>
-                <h2>No orders yet</h2>
+
+            <div
+                style="
+                    text-align:center;
+                    padding:50px 20px;
+                "
+            >
+
+                <div
+                    style="
+                        font-size:60px;
+                    "
+                >
+                    📦
+                </div>
+
+                <h2>
+                    No orders yet
+                </h2>
+
                 <p style="color:#777;">
                     Your placed orders will appear here.
                 </p>
+
             </div>
+
         `;
 
     } else {
 
-        ordersHTML = orders
-            .slice()
-            .reverse()
-            .map(order => {
+        ordersHTML =
+            orders
+                .slice()
+                .reverse()
+                .map(
+                    order => {
 
-                const orderDate =
-                    new Date(order.createdAt)
-                    .toLocaleString("en-IN");
-
-                const itemsHTML =
-                    order.items.map(item => {
-
-                        const product =
-                            products.find(
-                                p => p.id === item.id
+                        const orderDate =
+                            new Date(
+                                order.createdAt
+                            ).toLocaleString(
+                                "en-IN"
                             );
 
-                        if (!product) {
-                            return "";
-                        }
+                        const itemsHTML =
+                            (order.items || [])
+                                .map(
+                                    item => {
+
+                                        const product =
+                                            getProductById(
+                                                item.id
+                                            );
+
+                                        if (!product) {
+                                            return "";
+                                        }
+
+                                        return `
+
+                                            <div
+                                                style="
+                                                    display:flex;
+                                                    justify-content:space-between;
+                                                    padding:8px 0;
+                                                    border-bottom:1px solid #eee;
+                                                "
+                                            >
+
+                                                <span>
+
+                                                    ${escapeHtml(
+                                                        product.name
+                                                    )}
+
+                                                    ×
+                                                    ${item.quantity}
+
+                                                </span>
+
+                                                <strong>
+
+                                                    ${formatPrice(
+                                                        product.price *
+                                                        item.quantity
+                                                    )}
+
+                                                </strong>
+
+                                            </div>
+
+                                        `;
+
+                                    }
+                                )
+                                .join("");
 
                         return `
-                            <div style="
-                                display:flex;
-                                justify-content:space-between;
-                                padding:8px 0;
-                                border-bottom:1px solid #eee;
-                            ">
-                                <span>
-                                    ${escapeHtml(product.name)}
-                                    × ${item.quantity}
-                                </span>
 
-                                <strong>
-                                    ${formatPrice(
-                                        product.price *
-                                        item.quantity
+                            <div
+                                style="
+                                    border:1px solid #e5e5e5;
+                                    border-radius:16px;
+                                    padding:18px;
+                                    margin-bottom:14px;
+                                "
+                            >
+
+                                <div
+                                    style="
+                                        display:flex;
+                                        justify-content:space-between;
+                                    "
+                                >
+
+                                    <strong>
+                                        Order ${escapeHtml(order.id)}
+                                    </strong>
+
+                                    <span
+                                        style="
+                                            color:#078b18;
+                                            font-weight:700;
+                                        "
+                                    >
+                                        Placed
+                                    </span>
+
+                                </div>
+
+                                <div
+                                    style="
+                                        color:#777;
+                                        font-size:13px;
+                                        margin:8px 0 12px;
+                                    "
+                                >
+                                    ${orderDate}
+                                </div>
+
+                                ${itemsHTML}
+
+                                <div
+                                    style="
+                                        display:flex;
+                                        justify-content:space-between;
+                                        margin-top:14px;
+                                        font-size:17px;
+                                    "
+                                >
+
+                                    <strong>
+                                        Total
+                                    </strong>
+
+                                    <strong>
+                                        ${formatPrice(order.total)}
+                                    </strong>
+
+                                </div>
+
+                                <div
+                                    style="
+                                        margin-top:10px;
+                                        color:#666;
+                                    "
+                                >
+
+                                    Payment:
+                                    ${escapeHtml(
+                                        order.customer?.payment ||
+                                        "N/A"
                                     )}
-                                </strong>
+
+                                </div>
+
                             </div>
+
                         `;
 
-                    }).join("");
+                    }
+                )
+                .join("");
 
-                return `
-                    <div style="
-                        border:1px solid #e5e5e5;
-                        border-radius:16px;
-                        padding:18px;
-                        margin-bottom:14px;
-                        background:#fff;
-                    ">
-
-                        <div style="
-                            display:flex;
-                            justify-content:space-between;
-                            align-items:center;
-                            margin-bottom:10px;
-                        ">
-                            <strong>
-                                Order ${order.id}
-                            </strong>
-
-                            <span style="
-                                color:#078b18;
-                                font-weight:700;
-                            ">
-                                Placed
-                            </span>
-                        </div>
-
-                        <div style="
-                            color:#777;
-                            font-size:13px;
-                            margin-bottom:12px;
-                        ">
-                            ${orderDate}
-                        </div>
-
-                        ${itemsHTML}
-
-                        <div style="
-                            display:flex;
-                            justify-content:space-between;
-                            margin-top:14px;
-                            font-size:17px;
-                        ">
-                            <strong>Total</strong>
-                            <strong>
-                                ${formatPrice(order.total)}
-                            </strong>
-                        </div>
-
-                        <div style="
-                            margin-top:10px;
-                            color:#666;
-                            font-size:14px;
-                        ">
-                            Payment: ${escapeHtml(
-                                order.customer.payment || "N/A"
-                            )}
-                        </div>
-
-                    </div>
-                `;
-
-            })
-            .join("");
     }
 
     overlay.innerHTML = `
-        <div style="
-            background:#fff;
-            width:min(720px,92vw);
-            max-height:85vh;
-            overflow:auto;
-            border-radius:22px;
-            padding:24px;
-            position:relative;
-        ">
+
+        <div
+            style="
+                background:#fff;
+                width:min(720px,92vw);
+                max-height:85vh;
+                overflow:auto;
+                border-radius:22px;
+                padding:24px;
+                position:relative;
+            "
+        >
 
             <button
                 type="button"
@@ -3305,84 +3529,90 @@ function openOrders() {
                 ×
             </button>
 
-            <h2 style="
-                margin:0 0 22px;
-                font-size:28px;
-            ">
+            <h2>
                 My Orders
             </h2>
 
             ${ordersHTML}
 
         </div>
+
     `;
 
-    document.body.appendChild(overlay);
+    document.body.appendChild(
+        overlay
+    );
 
-    document
-        .getElementById("closeOrdersButton")
-        .addEventListener(
-            "click",
-            () => overlay.remove()
+    const closeButton =
+        getElement(
+            "closeOrdersButton"
         );
+
+    if (closeButton) {
+
+        closeButton.addEventListener(
+            "click",
+            function() {
+                overlay.remove();
+            }
+        );
+
+    }
 
     overlay.addEventListener(
         "click",
-        event => {
+        function(event) {
 
-            if (event.target === overlay) {
+            if (
+                event.target === overlay
+            ) {
                 overlay.remove();
             }
 
         }
     );
-}
-
-
-/* =========================================================
-   ORDERS BUTTON
-========================================================= */
-
-const ordersButton =
-    getElement("ordersButton");
-
-if (ordersButton) {
-
-    ordersButton.addEventListener(
-        "click",
-        openOrders
-    );
 
 }
+
+
 /* =========================================================
    LOGIN
-========================================================= */
+   ========================================================= */
 
 function openLogin() {
 
     const oldLogin =
-        document.getElementById("loginOverlay");
+        getElement(
+            "loginOverlay"
+        );
 
     if (oldLogin) {
         oldLogin.remove();
     }
 
     const overlay =
-        document.createElement("div");
+        document.createElement(
+            "div"
+        );
 
-    overlay.id = "loginOverlay";
-    overlay.className = "overlay open";
+    overlay.id =
+        "loginOverlay";
+
+    overlay.className =
+        "overlay open";
 
     overlay.innerHTML = `
 
-        <div style="
-            background:#fff;
-            width:min(420px,92vw);
-            border-radius:22px;
-            padding:28px;
-            position:relative;
-            box-shadow:0 20px 60px rgba(0,0,0,.18);
-        ">
+        <div
+            style="
+                background:#fff;
+                width:min(420px,92vw);
+                border-radius:22px;
+                padding:28px;
+                position:relative;
+                box-shadow:0 20px 60px rgba(0,0,0,.18);
+            "
+        >
 
             <button
                 type="button"
@@ -3403,104 +3633,229 @@ function openLogin() {
                 ×
             </button>
 
-            <h2 style="
-                margin:0 0 8px;
-                font-size:28px;
-            ">
+
+            <h2>
                 Welcome to Furzo
             </h2>
 
-            <p style="
-                margin:0 0 22px;
-                color:#777;
-            ">
-                Login to continue shopping
+
+            <p
+                id="loginSubtitle"
+                style="
+                    color:#777;
+                "
+            >
+                Enter your details to continue
             </p>
 
-            <input
-                type="text"
-                id="loginName"
-                placeholder="Enter your name"
-                style="
-                    width:100%;
-                    box-sizing:border-box;
-                    padding:14px;
-                    border:1px solid #ddd;
-                    border-radius:12px;
-                    margin-bottom:12px;
-                    font-size:15px;
-                    outline:none;
-                "
+
+            <div id="loginStepOne">
+
+                <input
+                    type="text"
+                    id="loginName"
+                    placeholder="Enter your name"
+                    style="
+                        width:100%;
+                        box-sizing:border-box;
+                        padding:14px;
+                        border:1px solid #ddd;
+                        border-radius:12px;
+                        margin-bottom:12px;
+                        font-size:15px;
+                        outline:none;
+                    "
+                >
+
+
+                <input
+                    type="tel"
+                    id="loginPhone"
+                    placeholder="Enter 10-digit mobile number"
+                    maxlength="10"
+                    inputmode="numeric"
+                    style="
+                        width:100%;
+                        box-sizing:border-box;
+                        padding:14px;
+                        border:1px solid #ddd;
+                        border-radius:12px;
+                        margin-bottom:16px;
+                        font-size:15px;
+                        outline:none;
+                    "
+                >
+
+
+                <button
+                    type="button"
+                    id="sendOtpButton"
+                    style="
+                        width:100%;
+                        border:0;
+                        background:#0c831f;
+                        color:white;
+                        padding:14px;
+                        border-radius:12px;
+                        font-size:16px;
+                        font-weight:700;
+                        cursor:pointer;
+                    "
+                >
+                    Send OTP
+                </button>
+
+            </div>
+
+
+            <div
+                id="loginStepTwo"
+                style="display:none;"
             >
 
-            <input
-                type="tel"
-                id="loginPhone"
-                placeholder="Enter mobile number"
-                maxlength="10"
-                style="
-                    width:100%;
-                    box-sizing:border-box;
-                    padding:14px;
-                    border:1px solid #ddd;
-                    border-radius:12px;
-                    margin-bottom:16px;
-                    font-size:15px;
-                    outline:none;
-                "
-            >
+                <input
+                    type="tel"
+                    id="otpInput"
+                    placeholder="Enter 6-digit OTP"
+                    maxlength="6"
+                    inputmode="numeric"
+                    style="
+                        width:100%;
+                        box-sizing:border-box;
+                        padding:14px;
+                        border:1px solid #ddd;
+                        border-radius:12px;
+                        margin-bottom:12px;
+                        font-size:18px;
+                        letter-spacing:6px;
+                        text-align:center;
+                    "
+                >
 
-            <button
-                type="button"
-                id="loginSubmitButton"
+
+                <button
+                    type="button"
+                    id="verifyOtpButton"
+                    style="
+                        width:100%;
+                        border:0;
+                        background:#0c831f;
+                        color:white;
+                        padding:14px;
+                        border-radius:12px;
+                        font-size:16px;
+                        font-weight:700;
+                        cursor:pointer;
+                    "
+                >
+                    Verify OTP
+                </button>
+
+
+                <button
+                    type="button"
+                    id="changePhoneButton"
+                    style="
+                        width:100%;
+                        border:0;
+                        background:white;
+                        color:#0c831f;
+                        padding:12px;
+                        margin-top:8px;
+                        border-radius:12px;
+                        font-size:14px;
+                        font-weight:700;
+                        cursor:pointer;
+                    "
+                >
+                    Change mobile number
+                </button>
+
+            </div>
+
+
+            <div
+                id="recaptcha-container"
                 style="
-                    width:100%;
-                    border:0;
-                    background:#0c831f;
-                    color:white;
-                    padding:14px;
-                    border-radius:12px;
-                    font-size:16px;
-                    font-weight:700;
-                    cursor:pointer;
+                    margin-top:12px;
                 "
-            >
-                Continue
-            </button>
+            ></div>
 
         </div>
 
     `;
 
-    document.body.appendChild(overlay);
+    document.body.appendChild(
+        overlay
+    );
 
 
-    document
-        .getElementById("closeLoginButton")
-        .addEventListener(
-            "click",
-            () => overlay.remove()
+    const closeButton =
+        getElement(
+            "closeLoginButton"
         );
 
+    if (closeButton) {
 
-    document
-        .getElementById("loginSubmitButton")
-        .addEventListener(
+        closeButton.addEventListener(
             "click",
             function() {
 
+                if (
+                    window.furzoRecaptchaVerifier &&
+                    typeof
+                        window.furzoRecaptchaVerifier
+                            .clear ===
+                        "function"
+                ) {
+
+                    try {
+
+                        window
+                            .furzoRecaptchaVerifier
+                            .clear();
+
+                    } catch (error) {}
+
+                }
+
+                overlay.remove();
+
+            }
+        );
+
+    }
+
+
+    let confirmationResult =
+        null;
+
+
+    const sendOtpButton =
+        getElement(
+            "sendOtpButton"
+        );
+
+
+    if (sendOtpButton) {
+
+        sendOtpButton.addEventListener(
+            "click",
+            async function() {
+
                 const name =
-                    document
-                        .getElementById("loginName")
-                        .value
+                    getElement(
+                        "loginName"
+                    )
+                        ?.value
                         .trim();
 
                 const phone =
-                    document
-                        .getElementById("loginPhone")
-                        .value
+                    getElement(
+                        "loginPhone"
+                    )
+                        ?.value
                         .trim();
-
 
                 if (!name) {
 
@@ -3512,9 +3867,10 @@ function openLogin() {
 
                 }
 
-
                 if (
-                    !/^[0-9]{10}$/.test(phone)
+                    !/^[0-9]{10}$/.test(
+                        phone
+                    )
                 ) {
 
                     showToast(
@@ -3525,29 +3881,262 @@ function openLogin() {
 
                 }
 
+                if (
+                    !window.furzoAuth ||
+                    !window
+                        .furzoRecaptchaVerifier ||
+                    !window
+                        .furzoSignInWithPhoneNumber
+                ) {
 
-                localStorage.setItem(
-                    "furzo_user",
-                    JSON.stringify({
-                        name: name,
-                        phone: phone
-                    })
-                );
+                    showToast(
+                        "Firebase is not ready"
+                    );
 
-cart = loadCart();
-updateCartCount();
-updateAllProducts();
-                overlay.remove();
-if (loginButton) {
-    loginButton.textContent = name;
-}
+                    return;
 
-                showToast(
-                    `Welcome ${name}!`
-                );
+                }
+
+                sendOtpButton.disabled =
+                    true;
+
+                sendOtpButton.textContent =
+                    "Sending OTP...";
+
+                try {
+
+                    if (
+                        window
+                            .furzoRecaptchaVerifier &&
+                        typeof
+                            window
+                                .furzoRecaptchaVerifier
+                                .clear ===
+                            "function"
+                    ) {
+
+                        try {
+
+                            window
+                                .furzoRecaptchaVerifier
+                                .clear();
+
+                        } catch (error) {}
+
+                    }
+
+                    const recaptchaVerifier =
+                        new window
+                            .furzoRecaptchaVerifier(
+                                window.furzoAuth,
+                                "recaptcha-container",
+                                {
+                                    size:
+                                        "invisible"
+                                }
+                            );
+
+                    confirmationResult =
+                        await window
+                            .furzoSignInWithPhoneNumber(
+                                window.furzoAuth,
+                                "+91" + phone,
+                                recaptchaVerifier
+                            );
+
+                    getElement(
+                        "loginStepOne"
+                    ).style.display =
+                        "none";
+
+                    getElement(
+                        "loginStepTwo"
+                    ).style.display =
+                        "block";
+
+                    getElement(
+                        "loginSubtitle"
+                    ).textContent =
+                        `OTP sent to +91 ${phone}`;
+
+                    showToast(
+                        "OTP sent successfully"
+                    );
+
+                } catch (error) {
+
+                    console.error(
+                        "OTP error:",
+                        error
+                    );
+
+                    showToast(
+                        error.message ||
+                        "Unable to send OTP"
+                    );
+
+                    sendOtpButton.disabled =
+                        false;
+
+                    sendOtpButton.textContent =
+                        "Send OTP";
+
+                }
 
             }
         );
+
+    }
+
+
+    const verifyOtpButton =
+        getElement(
+            "verifyOtpButton"
+        );
+
+    if (verifyOtpButton) {
+
+        verifyOtpButton.addEventListener(
+            "click",
+            async function() {
+
+                const name =
+                    getElement(
+                        "loginName"
+                    )
+                        ?.value
+                        .trim();
+
+                const otp =
+                    getElement(
+                        "otpInput"
+                    )
+                        ?.value
+                        .trim();
+
+                if (
+                    !/^[0-9]{6}$/.test(
+                        otp
+                    )
+                ) {
+
+                    showToast(
+                        "Enter the 6-digit OTP"
+                    );
+
+                    return;
+
+                }
+
+                if (!confirmationResult) {
+
+                    showToast(
+                        "Please request OTP first"
+                    );
+
+                    return;
+
+                }
+
+                verifyOtpButton.disabled =
+                    true;
+
+                verifyOtpButton.textContent =
+                    "Verifying...";
+
+                try {
+
+                    await confirmationResult
+                        .confirm(
+                            otp
+                        );
+
+                    const phone =
+                        getElement(
+                            "loginPhone"
+                        )
+                            ?.value
+                            .trim();
+
+                    localStorage.setItem(
+                        "furzo_user",
+                        JSON.stringify({
+                            name:
+                                name,
+                            phone:
+                                phone
+                        })
+                    );
+
+                    cart =
+                        loadCart();
+
+                    updateCartCount();
+                    renderProducts();
+
+                    overlay.remove();
+
+                    updateLoginButton();
+
+                    showToast(
+                        `Welcome ${name}!`
+                    );
+
+                } catch (error) {
+
+                    console.error(
+                        "OTP verify error:",
+                        error
+                    );
+
+                    showToast(
+                        "Invalid OTP. Please try again."
+                    );
+
+                    verifyOtpButton.disabled =
+                        false;
+
+                    verifyOtpButton.textContent =
+                        "Verify OTP";
+
+                }
+
+            }
+        );
+
+    }
+
+
+    const changePhoneButton =
+        getElement(
+            "changePhoneButton"
+        );
+
+    if (changePhoneButton) {
+
+        changePhoneButton.addEventListener(
+            "click",
+            function() {
+
+                getElement(
+                    "loginStepTwo"
+                ).style.display =
+                    "none";
+
+                getElement(
+                    "loginStepOne"
+                ).style.display =
+                    "block";
+
+                getElement(
+                    "loginSubtitle"
+                ).textContent =
+                    "Enter your details to continue";
+
+            }
+        );
+
+    }
 
 
     overlay.addEventListener(
@@ -3570,38 +4159,76 @@ if (loginButton) {
 
 /* =========================================================
    LOGIN BUTTON
-========================================================= */
+   ========================================================= */
 
-const loginButton =
-    getElement("loginButton");
+function updateLoginButton() {
 
-const savedUser =
-    localStorage.getItem("furzo_user");
+    const loginButton =
+        getElement(
+            "loginButton"
+        );
 
-if (savedUser && loginButton) {
+    if (!loginButton) {
+        return;
+    }
 
-    const user =
-        JSON.parse(savedUser);
+    const savedUser =
+        localStorage.getItem(
+            "furzo_user"
+        );
+
+    if (!savedUser) {
+
+        loginButton.textContent =
+            "Login";
+
+        return;
+
+    }
+
+    let user;
+
+    try {
+
+        user =
+            JSON.parse(
+                savedUser
+            );
+
+    } catch (error) {
+
+        loginButton.textContent =
+            "Login";
+
+        return;
+
+    }
 
     loginButton.textContent =
-        user.name;
+        user.name ||
+        "Account";
 
-    loginButton.addEventListener(
-        "click",
-        function () {
+
+    loginButton.onclick =
+        function() {
 
             const oldMenu =
-                document.getElementById(
+                getElement(
                     "accountMenu"
                 );
 
             if (oldMenu) {
+
                 oldMenu.remove();
+
                 return;
+
             }
 
             const menu =
-                document.createElement("div");
+                document.createElement(
+                    "div"
+                );
 
             menu.id =
                 "accountMenu";
@@ -3610,92 +4237,110 @@ if (savedUser && loginButton) {
                 position:fixed;
                 top:80px;
                 right:120px;
-                width:220px;
+                width:240px;
                 background:white;
                 border-radius:16px;
                 padding:10px;
                 box-shadow:0 10px 40px rgba(0,0,0,.18);
-                z-index:9999;
+                z-index:99999;
             `;
 
             menu.innerHTML = `
 
-                <div style="
-                    padding:14px;
-                    border-bottom:1px solid #eee;
-                ">
-                    <div style="
-                        font-size:12px;
-                        color:#777;
-                    ">
+                <div
+                    style="
+                        padding:14px;
+                        border-bottom:1px solid #eee;
+                    "
+                >
+
+                    <div
+                        style="
+                            font-size:12px;
+                            color:#777;
+                        "
+                    >
                         Logged in as
                     </div>
 
-                    <div style="
-                        font-size:17px;
-                        font-weight:700;
-                        margin-top:4px;
-                    ">
-                        ${user.name}
+                    <div
+                        style="
+                            font-size:17px;
+                            font-weight:700;
+                            margin-top:4px;
+                        "
+                    >
+                        ${escapeHtml(
+                            user.name || ""
+                        )}
                     </div>
 
-                    <div style="
-                        font-size:13px;
-                        color:#777;
-                        margin-top:3px;
-                    ">
-                        ${user.phone}
-                        <button
-    id="editProfileButton"
-    type="button"
-    style="
-        width:100%;
-        border:0;
-        background:#0c831f;
-        color:white;
-        padding:13px;
-        border-radius:12px;
-        font-size:15px;
-        font-weight:700;
-        cursor:pointer;
-        margin-top:18px;
-    "
->
-    ✏️ Edit Profile
-</button>
-
+                    <div
+                        style="
+                            font-size:13px;
+                            color:#777;
+                            margin-top:3px;
+                        "
+                    >
+                        ${escapeHtml(
+                            user.phone || ""
+                        )}
                     </div>
+
                 </div>
-<button
-    id="myProfileButton"
-    type="button"
-    style="
-        width:100%;
-        border:0;
-        background:white;
-        padding:14px;
-        text-align:left;
-        font-size:15px;
-        cursor:pointer;
-    "
->
-    👤 My Profile
-</button>
-<button
-    id="savedAddressButton"
-    type="button"
-    style="
-        width:100%;
-        border:0;
-        background:white;
-        padding:14px;
-        text-align:left;
-        font-size:15px;
-        cursor:pointer;
-    "
->
-    📍 Saved Address
-</button>
+
+
+                <button
+                    id="editProfileButton"
+                    type="button"
+                    style="
+                        width:100%;
+                        border:0;
+                        background:#0c831f;
+                        color:white;
+                        padding:13px;
+                        border-radius:12px;
+                        margin-top:10px;
+                        cursor:pointer;
+                        font-weight:700;
+                    "
+                >
+                    ✏️ Edit Profile
+                </button>
+
+
+                <button
+                    id="myProfileButton"
+                    type="button"
+                    style="
+                        width:100%;
+                        border:0;
+                        background:white;
+                        padding:14px;
+                        text-align:left;
+                        cursor:pointer;
+                    "
+                >
+                    👤 My Profile
+                </button>
+
+
+                <button
+                    id="savedAddressButton"
+                    type="button"
+                    style="
+                        width:100%;
+                        border:0;
+                        background:white;
+                        padding:14px;
+                        text-align:left;
+                        cursor:pointer;
+                    "
+                >
+                    📍 Saved Address
+                </button>
+
+
                 <button
                     id="addAccountButton"
                     type="button"
@@ -3705,12 +4350,12 @@ if (savedUser && loginButton) {
                         background:white;
                         padding:14px;
                         text-align:left;
-                        font-size:15px;
                         cursor:pointer;
                     "
                 >
                     ➕ Add / Switch Account
                 </button>
+
 
                 <button
                     id="logoutButton"
@@ -3721,7 +4366,6 @@ if (savedUser && loginButton) {
                         background:white;
                         padding:14px;
                         text-align:left;
-                        font-size:15px;
                         color:#d93025;
                         cursor:pointer;
                     "
@@ -3731,405 +4375,562 @@ if (savedUser && loginButton) {
 
             `;
 
-            document.body.appendChild(menu);
-           document
-    .getElementById("editProfileButton")
-    .addEventListener(
-        "click",
-        function () {
-
-            const newName =
-                window.prompt(
-                    "Enter your new name:",
-                    user.name
-                );
-
-            if (newName === null) {
-                return;
-            }
-
-            const cleanedName =
-                newName.trim();
-
-            if (!cleanedName) {
-                showToast(
-                    "Please enter your name"
-                );
-                return;
-            }
-
-            user.name =
-                cleanedName;
-
-            localStorage.setItem(
-                "furzo_user",
-                JSON.stringify(user)
+            document.body.appendChild(
+                menu
             );
 
-            menu.remove();
 
-            loginButton.textContent =
-                user.name;
+            const editButton =
+                getElement(
+                    "editProfileButton"
+                );
 
-            showToast(
-                "Profile updated successfully"
-            );
-        }
-    ); 
-            document
-    .getElementById("savedAddressButton")
-    .addEventListener(
-        "click",
-        function () {
-            menu.remove();
-            changeAddress();
-        }
-    );
-document
-    .getElementById("myProfileButton")
-    .addEventListener(
-        "click",
-        function () {
-            menu.remove();
-            openProfile();
-        }
-    );            
-document
-    .getElementById(
-        "logoutButton"
-)
-                .addEventListener(
+            if (editButton) {
+
+                editButton.addEventListener(
                     "click",
-                    function () {
+                    function() {
+
+                        const newName =
+                            window.prompt(
+                                "Enter your new name:",
+                                user.name || ""
+                            );
+
+                        if (
+                            newName ===
+                            null
+                        ) {
+                            return;
+                        }
+
+                        const cleanedName =
+                            newName.trim();
+
+                        if (!cleanedName) {
+
+                            showToast(
+                                "Please enter your name"
+                            );
+
+                            return;
+
+                        }
+
+                        user.name =
+                            cleanedName;
+
+                        localStorage.setItem(
+                            "furzo_user",
+                            JSON.stringify(
+                                user
+                            )
+                        );
+
+                        menu.remove();
+
+                        updateLoginButton();
+
+                        showToast(
+                            "Profile updated successfully"
+                        );
+
+                    }
+                );
+
+            }
+
+
+            const myProfileButton =
+                getElement(
+                    "myProfileButton"
+                );
+
+            if (myProfileButton) {
+
+                myProfileButton.addEventListener(
+                    "click",
+                    function() {
+
+                        menu.remove();
+
+                        openProfile();
+
+                    }
+                );
+
+            }
+
+
+            const savedAddressButton =
+                getElement(
+                    "savedAddressButton"
+                );
+
+            if (savedAddressButton) {
+
+                savedAddressButton.addEventListener(
+                    "click",
+                    function() {
+
+                        menu.remove();
+
+                        changeAddress();
+
+                    }
+                );
+
+            }
+
+
+            const addAccountButton =
+                getElement(
+                    "addAccountButton"
+                );
+
+            if (addAccountButton) {
+
+                addAccountButton.addEventListener(
+                    "click",
+                    function() {
+
+                        menu.remove();
+
+                        openLogin();
+
+                    }
+                );
+
+            }
+
+
+            const logoutButton =
+                getElement(
+                    "logoutButton"
+                );
+
+            if (logoutButton) {
+
+                logoutButton.addEventListener(
+                    "click",
+                    function() {
 
                         localStorage.removeItem(
                             "furzo_user"
                         );
 
                         menu.remove();
-                        cart = loadCart();
-updateCartCount();
-updateAllProducts();
+
+                        cart =
+                            loadCart();
+
+                        renderProducts();
+                        renderCart();
+                        updateCartCount();
+
                         loginButton.textContent =
                             "Login";
+
+                        loginButton.onclick =
+                            openLogin;
 
                         showToast(
                             "Logged out successfully"
                         );
+
                     }
                 );
-
-            document
-                .getElementById(
-                    "addAccountButton"
-                )
-                .addEventListener(
-                    "click",
-                    function () {
-
-                        menu.remove();
-
-                        openLogin();
-                    }
-                );
-        }
-    );
-
-} else if (loginButton) {
-
-    loginButton.addEventListener(
-        "click",
-        openLogin
-    );
-}
-
-/* =========================================================
-   CART BUTTON
-========================================================= */
-
-const cartButton =
-    getElement(
-        "cartButton"
-    );
-
-
-if (cartButton) {
-
-    cartButton.addEventListener(
-        "click",
-        openCart
-    );
-
-}
-
-
-/* =========================================================
-   CLOSE CART
-========================================================= */
-
-const closeCartButton =
-    getElement(
-        "closeCartButton"
-    );
-
-
-if (closeCartButton) {
-
-    closeCartButton.addEventListener(
-        "click",
-        closeCart
-    );
-
-}
-
-
-/* =========================================================
-   CLOSE PRODUCT
-========================================================= */
-
-const closeProductButton =
-    getElement(
-        "closeProductButton"
-    );
-
-
-if (closeProductButton) {
-
-    closeProductButton.addEventListener(
-        "click",
-        closeProduct
-    );
-
-}
-
-
-/* =========================================================
-   CLOSE CHECKOUT
-========================================================= */
-
-const closeCheckoutButton =
-    getElement(
-        "closeCheckoutButton"
-    );
-
-
-if (closeCheckoutButton) {
-
-    closeCheckoutButton.addEventListener(
-        "click",
-        closeCheckout
-    );
-
-}
-
-
-/* =========================================================
-   SEARCH INPUT
-========================================================= */
-
-const searchInput =
-    getElement(
-        "searchInput"
-    );
-
-
-if (searchInput) {
-
-    searchInput.addEventListener(
-        "input",
-        function(event) {
-
-            currentSearch =
-                event.target.value;
-
-
-            renderProducts();
-
-        }
-    );
-
-
-    searchInput.addEventListener(
-        "keydown",
-        function(event) {
-
-            if (
-                event.key ===
-                "Enter"
-            ) {
-
-                performSearch();
 
             }
 
-        }
-    );
+        };
 
 }
 
 
 /* =========================================================
-   SEARCH BUTTON
-========================================================= */
+   EVENT HANDLERS
+   ========================================================= */
 
-const searchButton =
-    getElement(
-        "searchButton"
-    );
+function setupEvents() {
 
 
-if (searchButton) {
+    /* =====================================================
+       GLOBAL CLICK
+       ===================================================== */
 
-    searchButton.addEventListener(
+    document.addEventListener(
         "click",
-        performSearch
-    );
-
-}
+        function(event) {
 
 
-/* =========================================================
-   LOCATION
-========================================================= */
+            /* ADD */
 
-const locationButton =
-    getElement(
-        "locationButton"
-    );
-
-
-if (locationButton) {
-
-    locationButton.addEventListener(
-        "click",
-        changeAddress
-    );
-
-}
-
-
-/* =========================================================
-   SHOP NOW
-========================================================= */
-
-const shopNowButton =
-    getElement(
-        "shopNowButton"
-    );
-
-
-if (shopNowButton) {
-
-    shopNowButton.addEventListener(
-        "click",
-        function() {
-
-            const section =
-                getElement(
-                    "productsSection"
+            const addButton =
+                event.target.closest(
+                    "[data-add]"
                 );
 
+            if (addButton) {
 
-            if (section) {
+                addToCart(
+                    Number(
+                        addButton.dataset.add
+                    )
+                );
 
-                section.scrollIntoView({
+                return;
 
-                    behavior:
-                        "smooth"
+            }
 
+
+            /* PRODUCT */
+
+            const productImage =
+                event.target.closest(
+                    "[data-product]"
+                );
+
+            if (productImage) {
+
+                openProduct(
+                    Number(
+                        productImage.dataset.product
+                    )
+                );
+
+                return;
+
+            }
+
+
+            /* PLUS */
+
+            const plusButton =
+                event.target.closest(
+                    "[data-plus]"
+                );
+
+            if (plusButton) {
+
+                increaseQuantity(
+                    Number(
+                        plusButton.dataset.plus
+                    )
+                );
+
+                return;
+
+            }
+
+
+            /* MINUS */
+
+            const minusButton =
+                event.target.closest(
+                    "[data-minus]"
+                );
+
+            if (minusButton) {
+
+                decreaseQuantity(
+                    Number(
+                        minusButton.dataset.minus
+                    )
+                );
+
+                return;
+
+            }
+
+
+            /* CART PLUS */
+
+            const cartPlus =
+                event.target.closest(
+                    "[data-cart-plus]"
+                );
+
+            if (cartPlus) {
+
+                increaseQuantity(
+                    Number(
+                        cartPlus.dataset.cartPlus
+                    )
+                );
+
+                return;
+
+            }
+
+
+            /* CART MINUS */
+
+            const cartMinus =
+                event.target.closest(
+                    "[data-cart-minus]"
+                );
+
+            if (cartMinus) {
+
+                decreaseQuantity(
+                    Number(
+                        cartMinus.dataset.cartMinus
+                    )
+                );
+
+                return;
+
+            }
+
+
+            /* CATEGORY */
+
+            const categoryButton =
+                event.target.closest(
+                    "[data-category]"
+                );
+
+            if (categoryButton) {
+
+                currentCategory =
+                    categoryButton.dataset.category;
+
+                renderCategories();
+                renderProducts();
+
+                window.scrollTo({
+                    top: 0,
+                    behavior: "smooth"
                 });
 
+                return;
+
+            }
+
+
+            /* DETAIL ADD */
+
+            const detailAdd =
+                event.target.closest(
+                    "[data-detail-add]"
+                );
+
+            if (detailAdd) {
+
+                addToCart(
+                    Number(
+                        detailAdd.dataset.detailAdd
+                    )
+                );
+
+                openProduct(
+                    Number(
+                        detailAdd.dataset.detailAdd
+                    )
+                );
+
+                return;
+
+            }
+
+
+            /* DETAIL PLUS */
+
+            const detailPlus =
+                event.target.closest(
+                    "[data-detail-plus]"
+                );
+
+            if (detailPlus) {
+
+                increaseQuantity(
+                    Number(
+                        detailPlus.dataset.detailPlus
+                    )
+                );
+
+                return;
+
+            }
+
+
+            /* DETAIL MINUS */
+
+            const detailMinus =
+                event.target.closest(
+                    "[data-detail-minus]"
+                );
+
+            if (detailMinus) {
+
+                decreaseQuantity(
+                    Number(
+                        detailMinus.dataset.detailMinus
+                    )
+                );
+
+                return;
+
+            }
+
+
+            /* BUY NOW */
+
+            const buyNow =
+                event.target.closest(
+                    "[data-buy-now]"
+                );
+
+            if (buyNow) {
+
+                const id =
+                    Number(
+                        buyNow.dataset.buyNow
+                    );
+
+                if (
+                    getQuantity(id) === 0
+                ) {
+
+                    addToCart(id);
+
+                }
+
+                closeProduct();
+                openCheckout();
+
+                return;
+
+            }
+
+
+            /* CHECKOUT */
+
+            if (
+                event.target.id ===
+                "checkoutButton"
+            ) {
+
+                openCheckout();
+
+                return;
+
             }
 
         }
     );
 
-}
 
+    /* =====================================================
+       CART BUTTON
+       ===================================================== */
 
-/* =========================================================
-   VIEW ALL
-========================================================= */
+    const cartButton =
+        getElement(
+            "cartButton"
+        );
 
-const viewAllButton =
-    getElement(
-        "viewAllButton"
-    );
+    if (cartButton) {
 
-
-if (viewAllButton) {
-
-    viewAllButton.addEventListener(
-        "click",
-        function() {
-
-            currentCategory =
-                "All";
-
-
-            currentSearch =
-                "";
-
-
-            if (searchInput) {
-
-                searchInput.value =
-                    "";
-
-            }
-
-
-            renderCategories();
-
-            renderProducts();
-
-        }
-    );
-
-}
-
-
-/* =========================================================
-   CHECKOUT FORM
-========================================================= */
-
-const checkoutForm =
-    getElement(
-        "checkoutForm"
-    );
-
-
-if (checkoutForm) {
-
-    checkoutForm.addEventListener(
-        "submit",
-        placeOrder
-    );
-
-}
-
-
-/* =========================================================
-   OVERLAY CLOSE
-========================================================= */
-
-selectAll(
-    ".overlay"
-).forEach(
-    overlay => {
-
-        overlay.addEventListener(
+        cartButton.addEventListener(
             "click",
+            openCart
+        );
+
+    }
+
+
+    /* =====================================================
+       CLOSE CART
+       ===================================================== */
+
+    const closeCartButton =
+        getElement(
+            "closeCartButton"
+        );
+
+    if (closeCartButton) {
+
+        closeCartButton.addEventListener(
+            "click",
+            closeCart
+        );
+
+    }
+
+
+    /* =====================================================
+       CLOSE PRODUCT
+       ===================================================== */
+
+    const closeProductButton =
+        getElement(
+            "closeProductButton"
+        );
+
+    if (closeProductButton) {
+
+        closeProductButton.addEventListener(
+            "click",
+            closeProduct
+        );
+
+    }
+
+
+    /* =====================================================
+       CLOSE CHECKOUT
+       ===================================================== */
+
+    const closeCheckoutButton =
+        getElement(
+            "closeCheckoutButton"
+        );
+
+    if (closeCheckoutButton) {
+
+        closeCheckoutButton.addEventListener(
+            "click",
+            closeCheckout
+        );
+
+    }
+
+
+    /* =====================================================
+       SEARCH
+       ===================================================== */
+
+    const searchInput =
+        getElement(
+            "searchInput"
+        );
+
+    if (searchInput) {
+
+        searchInput.addEventListener(
+            "input",
+            function(event) {
+
+                currentSearch =
+                    event.target.value;
+
+                renderProducts();
+
+            }
+        );
+
+        searchInput.addEventListener(
+            "keydown",
             function(event) {
 
                 if (
-                    event.target ===
-                    overlay
+                    event.key ===
+                    "Enter"
                 ) {
 
-                    overlay.classList.remove(
-                        "open"
-                    );
+                    performSearch();
 
                 }
 
@@ -4137,62 +4938,244 @@ selectAll(
         );
 
     }
-);
 
 
-/* =========================================================
-   ESC KEY
-========================================================= */
+    const searchButton =
+        getElement(
+            "searchButton"
+        );
 
-document.addEventListener(
-    "keydown",
-    function(event) {
+    if (searchButton) {
 
-        if (
-            event.key ===
-            "Escape"
-        ) {
+        searchButton.addEventListener(
+            "click",
+            performSearch
+        );
 
-            selectAll(
-                ".overlay.open"
-            ).forEach(
-                overlay => {
+    }
 
-                    overlay.classList.remove(
-                        "open"
+
+    /* =====================================================
+       LOCATION
+       ===================================================== */
+
+    const locationButton =
+        getElement(
+            "locationButton"
+        );
+
+    if (locationButton) {
+
+        locationButton.addEventListener(
+            "click",
+            changeAddress
+        );
+
+    }
+
+
+    /* =====================================================
+       SHOP NOW
+       ===================================================== */
+
+    const shopNowButton =
+        getElement(
+            "shopNowButton"
+        );
+
+    if (shopNowButton) {
+
+        shopNowButton.addEventListener(
+            "click",
+            function() {
+
+                const section =
+                    getElement(
+                        "productsSection"
                     );
+
+                if (section) {
+
+                    section.scrollIntoView({
+                        behavior: "smooth"
+                    });
+
+                }
+
+            }
+        );
+
+    }
+
+
+    /* =====================================================
+       VIEW ALL
+       ===================================================== */
+
+    const viewAllButton =
+        getElement(
+            "viewAllButton"
+        );
+
+    if (viewAllButton) {
+
+        viewAllButton.addEventListener(
+            "click",
+            function() {
+
+                currentCategory =
+                    "All";
+
+                currentSearch =
+                    "";
+
+                if (searchInput) {
+
+                    searchInput.value =
+                        "";
+
+                }
+
+                renderCategories();
+                renderProducts();
+
+            }
+        );
+
+    }
+
+
+    /* =====================================================
+       CHECKOUT FORM
+       ===================================================== */
+
+    const checkoutForm =
+        getElement(
+            "checkoutForm"
+        );
+
+    if (checkoutForm) {
+
+        checkoutForm.addEventListener(
+            "submit",
+            placeOrder
+        );
+
+    }
+
+
+    /* =====================================================
+       ORDERS BUTTON
+       ===================================================== */
+
+    const ordersButton =
+        getElement(
+            "ordersButton"
+        );
+
+    if (ordersButton) {
+
+        ordersButton.addEventListener(
+            "click",
+            openOrders
+        );
+
+    }
+
+
+    /* =====================================================
+       LOGIN
+       ===================================================== */
+
+    updateLoginButton();
+
+
+    /* =====================================================
+       OVERLAYS
+       ===================================================== */
+
+    selectAll(
+        ".overlay"
+    ).forEach(
+        overlay => {
+
+            overlay.addEventListener(
+                "click",
+                function(event) {
+
+                    if (
+                        event.target ===
+                        overlay
+                    ) {
+
+                        overlay.classList.remove(
+                            "open"
+                        );
+
+                    }
 
                 }
             );
 
         }
-
-    }
-);
+    );
 
 
-/* =========================================================
-   INITIALIZE
-========================================================= */
+    /* =====================================================
+       ESCAPE
+       ===================================================== */
 
-function initializeApp() {
+    document.addEventListener(
+        "keydown",
+        function(event) {
 
-    renderCategories();
+            if (
+                event.key ===
+                "Escape"
+            ) {
 
-    renderProducts();
+                selectAll(
+                    ".overlay.open"
+                ).forEach(
+                    overlay => {
 
-    renderCart();
+                        overlay.classList.remove(
+                            "open"
+                        );
 
-    updateCartCount();
+                    }
+                );
 
-    updateAddress();
+            }
+
+        }
+    );
 
 }
 
 
 /* =========================================================
-   START APP
-========================================================= */
+   INITIALIZE
+   ========================================================= */
+
+function initializeApp() {
+
+    cart =
+        loadCart();
+
+    renderCategories();
+    renderProducts();
+    renderCart();
+    updateCartCount();
+    updateAddress();
+    setupEvents();
+
+}
+
+
+/* =========================================================
+   START
+   ========================================================= */
 
 if (
     document.readyState ===
@@ -4213,4 +5196,4 @@ if (
 
 /* =========================================================
    END
-========================================================= */
+   ========================================================= */
