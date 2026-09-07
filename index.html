@@ -1,0 +1,1619 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Furzo - Everything You Need</title>
+
+    <style>
+
+        /* =========================================
+           RESET
+        ========================================= */
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #ffffff;
+            color: #111814;
+        }
+
+
+        button,
+        input {
+            font-family: inherit;
+        }
+
+
+        button {
+            cursor: pointer;
+        }
+
+
+        /* =========================================
+           HEADER
+        ========================================= */
+
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+
+            background: #ffffff;
+
+            border-bottom: 1px solid #eeeeee;
+
+            padding: 14px 5%;
+
+            display: flex;
+            align-items: center;
+
+            gap: 25px;
+        }
+
+
+        /* LOGO */
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+
+            min-width: 180px;
+        }
+
+
+        .logo-box {
+            width: 45px;
+            height: 45px;
+
+            background: #145c32;
+            color: white;
+
+            border-radius: 12px;
+
+            display: grid;
+            place-items: center;
+
+            font-size: 25px;
+            font-weight: bold;
+        }
+
+
+        .logo h1 {
+            color: #145c32;
+            font-size: 27px;
+        }
+
+
+        .logo small {
+            display: block;
+
+            font-size: 9px;
+            letter-spacing: 2px;
+
+            color: #777;
+        }
+
+
+        /* LOCATION */
+
+        .location {
+            min-width: 150px;
+            font-size: 14px;
+        }
+
+
+        .location b {
+            display: block;
+            font-size: 16px;
+            margin-top: 4px;
+        }
+
+
+        /* SEARCH */
+
+        .search {
+            flex: 1;
+
+            padding: 14px 18px;
+
+            border: 1px solid #dddddd;
+            border-radius: 12px;
+
+            font-size: 15px;
+
+            outline: none;
+        }
+
+
+        .search:focus {
+            border-color: #145c32;
+        }
+
+
+        /* CART BUTTON */
+
+        .cart-btn {
+            background: white;
+
+            border: 1px solid #dddddd;
+
+            padding: 13px 20px;
+
+            border-radius: 12px;
+
+            font-weight: bold;
+
+            white-space: nowrap;
+        }
+
+
+        .cart-btn:hover {
+            background: #f5f5f5;
+        }
+
+
+        .cart-count {
+            display: none;
+
+            background: #145c32;
+            color: white;
+
+            padding: 4px 8px;
+
+            border-radius: 50%;
+
+            margin-left: 5px;
+
+            font-size: 12px;
+        }
+
+
+        /* =========================================
+           MAIN
+        ========================================= */
+
+        main {
+            width: 90%;
+            max-width: 1400px;
+
+            margin: 30px auto;
+        }
+
+
+        /* =========================================
+           HERO
+        ========================================= */
+
+        .hero {
+            background: #eef6e8;
+
+            border-radius: 25px;
+
+            padding: 60px 55px;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            gap: 30px;
+
+            margin-bottom: 45px;
+        }
+
+
+        .hero-text {
+            max-width: 650px;
+        }
+
+
+        .tag {
+            display: inline-block;
+
+            background: #dcefd5;
+            color: #145c32;
+
+            padding: 9px 15px;
+
+            border-radius: 20px;
+
+            font-size: 12px;
+            font-weight: bold;
+
+            letter-spacing: 1px;
+
+            margin-bottom: 20px;
+        }
+
+
+        .hero h2 {
+            font-size: 52px;
+            line-height: 1.05;
+
+            margin-bottom: 20px;
+        }
+
+
+        .hero h2 span {
+            color: #145c32;
+        }
+
+
+        .hero p {
+            color: #5f6b63;
+
+            font-size: 18px;
+            line-height: 1.6;
+
+            margin-bottom: 25px;
+        }
+
+
+        .shop-btn {
+            display: inline-block;
+
+            background: #145c32;
+            color: white;
+
+            border: none;
+
+            padding: 14px 25px;
+
+            border-radius: 10px;
+
+            font-weight: bold;
+
+            text-decoration: none;
+        }
+
+
+        .shop-btn:hover {
+            opacity: 0.9;
+        }
+
+
+        .hero-image {
+            width: 300px;
+            height: 250px;
+
+            background: #d8ebce;
+
+            border-radius: 25px;
+
+            display: grid;
+            place-items: center;
+
+            font-size: 100px;
+        }
+
+
+        /* =========================================
+           CATEGORIES
+        ========================================= */
+
+        section {
+            margin-bottom: 45px;
+        }
+
+
+        section > h2 {
+            font-size: 27px;
+            margin-bottom: 20px;
+        }
+
+
+        .categories {
+            display: grid;
+
+            grid-template-columns:
+                repeat(auto-fit, minmax(120px, 1fr));
+
+            gap: 15px;
+        }
+
+
+        .category {
+            border: 1px solid #eeeeee;
+
+            border-radius: 15px;
+
+            padding: 20px 10px;
+
+            text-align: center;
+
+            background: white;
+
+            transition: 0.2s;
+        }
+
+
+        .category:hover {
+            transform: translateY(-3px);
+
+            box-shadow:
+                0 8px 20px rgba(0, 0, 0, 0.08);
+        }
+
+
+        .category-icon {
+            font-size: 35px;
+
+            margin-bottom: 10px;
+        }
+
+
+        .category h3 {
+            font-size: 14px;
+        }
+
+
+        /* =========================================
+           PRODUCTS
+        ========================================= */
+
+        .products {
+            display: grid;
+
+            grid-template-columns:
+                repeat(auto-fill, minmax(210px, 1fr));
+
+            gap: 20px;
+        }
+
+
+        .product {
+            background: white;
+
+            border: 1px solid #eeeeee;
+
+            border-radius: 16px;
+
+            padding: 15px;
+
+            transition: 0.2s;
+
+            min-width: 0;
+        }
+
+
+        .product:hover {
+            transform: translateY(-3px);
+
+            box-shadow:
+                0 8px 25px rgba(0, 0, 0, 0.08);
+        }
+
+
+        /* PRODUCT IMAGE */
+
+        .product-image {
+            height: 170px;
+
+            border-radius: 12px;
+
+            background: #f5f7f3;
+
+            display: grid;
+            place-items: center;
+
+            font-size: 75px;
+
+            margin-bottom: 14px;
+        }
+
+
+        .product h3 {
+            font-size: 17px;
+
+            margin-bottom: 7px;
+        }
+
+
+        .product small {
+            color: #777;
+
+            display: block;
+
+            margin-bottom: 14px;
+        }
+
+
+        .product-bottom {
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            gap: 10px;
+        }
+
+
+        .product-bottom b {
+            font-size: 17px;
+        }
+
+
+        /* ADD BUTTON */
+
+        .add-btn {
+            background: white;
+
+            color: #145c32;
+
+            border: 1px solid #145c32;
+
+            padding: 8px 17px;
+
+            border-radius: 8px;
+
+            font-weight: bold;
+
+            font-size: 13px;
+        }
+
+
+        .add-btn:hover {
+            background: #145c32;
+            color: white;
+        }
+
+
+        /* =========================================
+           DEAL BANNER
+        ========================================= */
+
+        .deal-banner {
+            background: #145c32;
+
+            color: white;
+
+            border-radius: 20px;
+
+            padding: 30px;
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            gap: 20px;
+        }
+
+
+        .deal-banner h2 {
+            margin-bottom: 8px;
+        }
+
+
+        .deal-banner p {
+            opacity: 0.85;
+        }
+
+
+        .deal-badge {
+            background: white;
+
+            color: #145c32;
+
+            padding: 14px 20px;
+
+            border-radius: 12px;
+
+            font-weight: bold;
+
+            white-space: nowrap;
+        }
+
+
+        /* =========================================
+           FEATURES
+        ========================================= */
+
+        .features {
+            display: grid;
+
+            grid-template-columns:
+                repeat(auto-fit, minmax(220px, 1fr));
+
+            gap: 20px;
+        }
+
+
+        .feature {
+            background: #f8faf7;
+
+            padding: 25px;
+
+            border-radius: 15px;
+
+            text-align: center;
+        }
+
+
+        .feature-icon {
+            font-size: 35px;
+
+            margin-bottom: 10px;
+        }
+
+
+        .feature h3 {
+            margin-bottom: 7px;
+        }
+
+
+        .feature p {
+            color: #777;
+
+            font-size: 14px;
+
+            line-height: 1.5;
+        }
+
+
+        /* =========================================
+           FOOTER
+        ========================================= */
+
+        footer {
+            background: #10291b;
+
+            color: white;
+
+            padding: 45px 7%;
+
+            margin-top: 50px;
+        }
+
+
+        .footer-content {
+            max-width: 1400px;
+
+            margin: auto;
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(auto-fit, minmax(220px, 1fr));
+
+            gap: 30px;
+        }
+
+
+        footer h2 {
+            margin-bottom: 10px;
+        }
+
+
+        footer h3 {
+            margin-bottom: 12px;
+        }
+
+
+        footer p {
+            color: #c9d4cc;
+
+            line-height: 1.6;
+
+            font-size: 14px;
+        }
+
+
+        footer ul {
+            list-style: none;
+        }
+
+
+        footer li {
+            color: #c9d4cc;
+
+            margin-bottom: 8px;
+
+            font-size: 14px;
+        }
+
+
+        .copyright {
+            max-width: 1400px;
+
+            margin: 35px auto 0;
+
+            padding-top: 20px;
+
+            border-top: 1px solid #2c4937;
+
+            color: #aebbb2;
+
+            font-size: 13px;
+        }
+
+
+        /* =========================================
+           MOBILE
+        ========================================= */
+
+        @media (max-width: 800px) {
+
+            header {
+                flex-wrap: wrap;
+
+                gap: 12px;
+
+                padding: 12px 4%;
+            }
+
+
+            .logo {
+                min-width: auto;
+            }
+
+
+            .location {
+                display: none;
+            }
+
+
+            .search {
+                order: 3;
+
+                flex-basis: 100%;
+            }
+
+
+            .cart-btn {
+                margin-left: auto;
+            }
+
+
+            .hero {
+                padding: 35px 25px;
+
+                flex-direction: column;
+
+                align-items: flex-start;
+            }
+
+
+            .hero h2 {
+                font-size: 38px;
+            }
+
+
+            .hero-image {
+                width: 100%;
+            }
+
+
+            main {
+                width: 92%;
+            }
+
+        }
+
+
+        @media (max-width: 500px) {
+
+            .products {
+                grid-template-columns:
+                    repeat(2, minmax(0, 1fr));
+
+                gap: 10px;
+            }
+
+
+            .product {
+                padding: 10px;
+            }
+
+
+            .product-image {
+                height: 130px;
+
+                font-size: 55px;
+            }
+
+
+            .product h3 {
+                font-size: 14px;
+            }
+
+
+            .product-bottom {
+                align-items: flex-end;
+
+                flex-direction: column;
+            }
+
+
+            .add-btn {
+                width: 100%;
+            }
+
+
+            .hero h2 {
+                font-size: 32px;
+            }
+
+        }
+
+    </style>
+</head>
+
+
+<body>
+
+
+    <!-- =========================================
+         HEADER
+    ========================================== -->
+
+    <header>
+
+        <div class="logo">
+
+            <div class="logo-box">
+                F
+            </div>
+
+            <div>
+                <h1>Furzo</h1>
+
+                <small>EVERYTHING YOU NEED</small>
+            </div>
+
+        </div>
+
+
+        <div class="location">
+
+            Deliver to
+
+            <b>📍 Your Location</b>
+
+        </div>
+
+
+        <input
+            class="search"
+            type="search"
+            placeholder="Search for groceries, fruits, snacks..."
+        >
+
+
+        <button
+            class="cart-btn"
+            id="cartBtn"
+        >
+            🛒 Cart
+
+            <span class="cart-count">
+                0
+            </span>
+
+        </button>
+
+    </header>
+
+
+
+    <!-- =========================================
+         MAIN
+    ========================================== -->
+
+    <main>
+
+
+        <!-- HERO -->
+
+        <section class="hero">
+
+            <div class="hero-text">
+
+                <span class="tag">
+                    GROCERIES AT YOUR DOOR
+                </span>
+
+
+                <h2>
+                    Everything you need,
+                    <span>right when you need it.</span>
+                </h2>
+
+
+                <p>
+                    Fresh groceries, daily essentials,
+                    snacks and more delivered straight
+                    to your doorstep.
+                </p>
+
+
+                <a
+                    href="#products"
+                    class="shop-btn"
+                >
+                    Shop Now
+                </a>
+
+            </div>
+
+
+            <div class="hero-image">
+                🛍️
+            </div>
+
+        </section>
+
+
+
+        <!-- =====================================
+             CATEGORIES
+        ====================================== -->
+
+        <section>
+
+            <h2>
+                Shop by Category
+            </h2>
+
+
+            <div class="categories">
+
+
+                <div class="category">
+
+                    <div class="category-icon">
+                        🥦
+                    </div>
+
+                    <h3>Vegetables</h3>
+
+                </div>
+
+
+                <div class="category">
+
+                    <div class="category-icon">
+                        🍎
+                    </div>
+
+                    <h3>Fruits</h3>
+
+                </div>
+
+
+                <div class="category">
+
+                    <div class="category-icon">
+                        🥛
+                    </div>
+
+                    <h3>Dairy</h3>
+
+                </div>
+
+
+                <div class="category">
+
+                    <div class="category-icon">
+                        🍪
+                    </div>
+
+                    <h3>Snacks</h3>
+
+                </div>
+
+
+                <div class="category">
+
+                    <div class="category-icon">
+                        🥤
+                    </div>
+
+                    <h3>Drinks</h3>
+
+                </div>
+
+
+                <div class="category">
+
+                    <div class="category-icon">
+                        🧴
+                    </div>
+
+                    <h3>Personal Care</h3>
+
+                </div>
+
+
+                <div class="category">
+
+                    <div class="category-icon">
+                        🧹
+                    </div>
+
+                    <h3>Home Care</h3>
+
+                </div>
+
+
+                <div class="category">
+
+                    <div class="category-icon">
+                        🐶
+                    </div>
+
+                    <h3>Pet Care</h3>
+
+                </div>
+
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =====================================
+             DEAL
+        ====================================== -->
+
+        <section class="deal-banner">
+
+            <div>
+
+                <h2>
+                    ⚡ Super Saver Deals
+                </h2>
+
+                <p>
+                    Save more on your everyday essentials.
+                </p>
+
+            </div>
+
+
+            <div class="deal-badge">
+                UP TO 40% OFF
+            </div>
+
+        </section>
+
+
+
+        <!-- =====================================
+             BEST SELLERS
+        ====================================== -->
+
+        <section id="products">
+
+            <h2>
+                Best Sellers 🔥
+            </h2>
+
+
+            <div class="products">
+
+
+                <!-- PRODUCT 1 -->
+
+                <div class="product">
+
+                    <div class="product-image">
+                        🥛
+                    </div>
+
+                    <h3>
+                        Amul Taaza Milk
+                    </h3>
+
+                    <small>
+                        1 L
+                    </small>
+
+                    <div class="product-bottom">
+
+                        <b>
+                            ₹57
+                        </b>
+
+                        <button class="add-btn">
+                            ADD
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- PRODUCT 2 -->
+
+                <div class="product">
+
+                    <div class="product-image">
+                        🍌
+                    </div>
+
+                    <h3>
+                        Banana (Kela)
+                    </h3>
+
+                    <small>
+                        1 kg
+                    </small>
+
+                    <div class="product-bottom">
+
+                        <b>
+                            ₹25
+                        </b>
+
+                        <button class="add-btn">
+                            ADD
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- PRODUCT 3 -->
+
+                <div class="product">
+
+                    <div class="product-image">
+                        🥔
+                    </div>
+
+                    <h3>
+                        Fresh Potatoes
+                    </h3>
+
+                    <small>
+                        1 kg
+                    </small>
+
+                    <div class="product-bottom">
+
+                        <b>
+                            ₹35
+                        </b>
+
+                        <button class="add-btn">
+                            ADD
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- PRODUCT 4 -->
+
+                <div class="product">
+
+                    <div class="product-image">
+                        🍅
+                    </div>
+
+                    <h3>
+                        Fresh Tomatoes
+                    </h3>
+
+                    <small>
+                        1 kg
+                    </small>
+
+                    <div class="product-bottom">
+
+                        <b>
+                            ₹40
+                        </b>
+
+                        <button class="add-btn">
+                            ADD
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- PRODUCT 5 -->
+
+                <div class="product">
+
+                    <div class="product-image">
+                        🍎
+                    </div>
+
+                    <h3>
+                        Fresh Apples
+                    </h3>
+
+                    <small>
+                        1 kg
+                    </small>
+
+                    <div class="product-bottom">
+
+                        <b>
+                            ₹140
+                        </b>
+
+                        <button class="add-btn">
+                            ADD
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- PRODUCT 6 -->
+
+                <div class="product">
+
+                    <div class="product-image">
+                        🍞
+                    </div>
+
+                    <h3>
+                        Sandwich Bread
+                    </h3>
+
+                    <small>
+                        400 g
+                    </small>
+
+                    <div class="product-bottom">
+
+                        <b>
+                            ₹45
+                        </b>
+
+                        <button class="add-btn">
+                            ADD
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- PRODUCT 7 -->
+
+                <div class="product">
+
+                    <div class="product-image">
+                        🍪
+                    </div>
+
+                    <h3>
+                        Parle-G Biscuits
+                    </h3>
+
+                    <small>
+                        800 g
+                    </small>
+
+                    <div class="product-bottom">
+
+                        <b>
+                            ₹75
+                        </b>
+
+                        <button class="add-btn">
+                            ADD
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- PRODUCT 8 -->
+
+                <div class="product">
+
+                    <div class="product-image">
+                        🥤
+                    </div>
+
+                    <h3>
+                        Coca Cola
+                    </h3>
+
+                    <small>
+                        750 ml
+                    </small>
+
+                    <div class="product-bottom">
+
+                        <b>
+                            ₹45
+                        </b>
+
+                        <button class="add-btn">
+                            ADD
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =====================================
+             DAILY ESSENTIALS
+        ====================================== -->
+
+        <section>
+
+            <h2>
+                Daily Essentials
+            </h2>
+
+
+            <div class="products">
+
+
+                <div class="product">
+
+                    <div class="product-image">
+                        🍚
+                    </div>
+
+                    <h3>
+                        India Gate Rice
+                    </h3>
+
+                    <small>
+                        5 kg
+                    </small>
+
+                    <div class="product-bottom">
+
+                        <b>
+                            ₹520
+                        </b>
+
+                        <button class="add-btn">
+                            ADD
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <div class="product">
+
+                    <div class="product-image">
+                        🌾
+                    </div>
+
+                    <h3>
+                        Aashirvaad Atta
+                    </h3>
+
+                    <small>
+                        5 kg
+                    </small>
+
+                    <div class="product-bottom">
+
+                        <b>
+                            ₹290
+                        </b>
+
+                        <button class="add-btn">
+                            ADD
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <div class="product">
+
+                    <div class="product-image">
+                        🫗
+                    </div>
+
+                    <h3>
+                        Fortune Sunlite Oil
+                    </h3>
+
+                    <small>
+                        1 L
+                    </small>
+
+                    <div class="product-bottom">
+
+                        <b>
+                            ₹110
+                        </b>
+
+                        <button class="add-btn">
+                            ADD
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <div class="product">
+
+                    <div class="product-image">
+                        🧂
+                    </div>
+
+                    <h3>
+                        Tata Salt
+                    </h3>
+
+                    <small>
+                        1 kg
+                    </small>
+
+                    <div class="product-bottom">
+
+                        <b>
+                            ₹28
+                        </b>
+
+                        <button class="add-btn">
+                            ADD
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =====================================
+             WHY FURZO
+        ====================================== -->
+
+        <section>
+
+            <h2>
+                Why Shop With Furzo?
+            </h2>
+
+
+            <div class="features">
+
+
+                <div class="feature">
+
+                    <div class="feature-icon">
+                        ⚡
+                    </div>
+
+                    <h3>
+                        Fast Delivery
+                    </h3>
+
+                    <p>
+                        Get your everyday essentials
+                        delivered quickly.
+                    </p>
+
+                </div>
+
+
+                <div class="feature">
+
+                    <div class="feature-icon">
+                        🥬
+                    </div>
+
+                    <h3>
+                        Fresh Products
+                    </h3>
+
+                    <p>
+                        Quality groceries selected
+                        for your everyday needs.
+                    </p>
+
+                </div>
+
+
+                <div class="feature">
+
+                    <div class="feature-icon">
+                        💰
+                    </div>
+
+                    <h3>
+                        Great Prices
+                    </h3>
+
+                    <p>
+                        Everyday products at prices
+                        that make sense.
+                    </p>
+
+                </div>
+
+
+                <div class="feature">
+
+                    <div class="feature-icon">
+                        🔒
+                    </div>
+
+                    <h3>
+                        Secure Shopping
+                    </h3>
+
+                    <p>
+                        A simple and secure shopping
+                        experience.
+                    </p>
+
+                </div>
+
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+
+    <!-- =========================================
+         FOOTER
+    ========================================== -->
+
+    <footer>
+
+        <div class="footer-content">
+
+
+            <div>
+
+                <h2>
+                    Furzo
+                </h2>
+
+                <p>
+                    Everything you need.
+                    Right when you need it.
+                </p>
+
+            </div>
+
+
+            <div>
+
+                <h3>
+                    Shop
+                </h3>
+
+                <ul>
+
+                    <li>Groceries</li>
+                    <li>Fruits & Vegetables</li>
+                    <li>Dairy</li>
+                    <li>Snacks</li>
+
+                </ul>
+
+            </div>
+
+
+            <div>
+
+                <h3>
+                    Help
+                </h3>
+
+                <ul>
+
+                    <li>Contact Us</li>
+                    <li>Delivery Information</li>
+                    <li>Returns</li>
+                    <li>FAQs</li>
+
+                </ul>
+
+            </div>
+
+
+            <div>
+
+                <h3>
+                    Follow Us
+                </h3>
+
+                <p>
+                    Instagram · Facebook · X
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="copyright">
+
+            © 2026 Furzo. All rights reserved.
+
+        </div>
+
+    </footer>
+
+
+
+    <!-- =========================================
+         JAVASCRIPT
+    ========================================== -->
+
+  
+<!-- PRODUCT DETAIL POPUP -->
+<div id="productOverlay" class="overlay">
+
+    <div class="product-detail-panel">
+
+        <div class="panel-header">
+
+            <h2>Product Details</h2>
+
+            <button
+                type="button"
+                class="close-button"
+                id="closeProductButton">
+                ×
+            </button>
+
+        </div>
+
+        <div id="productDetail">
+
+            <!-- Product details JavaScript se yahan aayengi -->
+
+        </div>
+
+    </div>
+
+</div>
+<script src="script.js"></script>
+</body>
+
+</html>
