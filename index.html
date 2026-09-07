@@ -1,64 +1,99 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
+    <title>Furzo - Groceries Delivered Fast</title>
 
-    <title>Furzo - Everything You Need</title>
+    <meta
+        name="description"
+        content="Furzo - Your everyday grocery store for fruits, vegetables, dairy, snacks, beverages and more."
+    >
 
     <style>
 
-        /* =========================================
+        /* =====================================================
            RESET
-        ========================================= */
+        ===================================================== */
 
         * {
-            box-sizing: border-box;
             margin: 0;
             padding: 0;
+            box-sizing: border-box;
         }
 
+        html {
+            scroll-behavior: smooth;
+        }
 
         body {
-            font-family: Arial, sans-serif;
-            background: #ffffff;
-            color: #111814;
-        }
+            font-family:
+                Inter,
+                Arial,
+                Helvetica,
+                sans-serif;
 
+            background: #f7f7f7;
+            color: #222;
+            min-height: 100vh;
+        }
 
         button,
-        input {
-            font-family: inherit;
+        input,
+        textarea,
+        select {
+            font: inherit;
         }
-
 
         button {
             cursor: pointer;
         }
 
+        img {
+            max-width: 100%;
+            display: block;
+        }
 
-        /* =========================================
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+
+        /* =====================================================
            HEADER
-        ========================================= */
+        ===================================================== */
 
-        header {
+        .header {
             position: sticky;
             top: 0;
             z-index: 1000;
 
-            background: #ffffff;
+            background: white;
 
-            border-bottom: 1px solid #eeeeee;
+            border-bottom:
+                1px solid #e8e8e8;
 
-            padding: 14px 5%;
+            box-shadow:
+                0 2px 12px
+                rgba(0, 0, 0, 0.05);
+        }
+
+        .header-inner {
+            width: min(
+                1400px,
+                calc(100% - 30px)
+            );
+
+            min-height: 76px;
+
+            margin: auto;
 
             display: flex;
             align-items: center;
 
-            gap: 25px;
+            gap: 22px;
         }
 
 
@@ -67,669 +102,1551 @@
         .logo {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
 
-            min-width: 180px;
+            min-width: 150px;
+
+            font-size: 28px;
+            font-weight: 900;
+
+            color: #0c831f;
+
+            letter-spacing: -1px;
         }
 
-
-        .logo-box {
-            width: 45px;
-            height: 45px;
-
-            background: #145c32;
-            color: white;
+        .logo-icon {
+            width: 42px;
+            height: 42px;
 
             border-radius: 12px;
+
+            background: #0c831f;
+
+            color: white;
 
             display: grid;
             place-items: center;
 
-            font-size: 25px;
-            font-weight: bold;
-        }
-
-
-        .logo h1 {
-            color: #145c32;
-            font-size: 27px;
-        }
-
-
-        .logo small {
-            display: block;
-
-            font-size: 9px;
-            letter-spacing: 2px;
-
-            color: #777;
+            font-size: 22px;
         }
 
 
         /* LOCATION */
 
-        .location {
-            min-width: 150px;
-            font-size: 14px;
+        .location-button {
+            border: none;
+            background: transparent;
+
+            text-align: left;
+
+            padding: 8px;
+
+            min-width: 170px;
         }
 
+        .location-title {
+            font-size: 12px;
+            color: #777;
+        }
 
-        .location b {
+        .location-value {
             display: block;
-            font-size: 16px;
-            margin-top: 4px;
+
+            margin-top: 3px;
+
+            font-size: 14px;
+            font-weight: 700;
+
+            max-width: 180px;
+
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
 
         /* SEARCH */
 
-        .search {
+        .search-box {
             flex: 1;
 
-            padding: 14px 18px;
-
-            border: 1px solid #dddddd;
-            border-radius: 12px;
-
-            font-size: 15px;
-
-            outline: none;
-        }
-
-
-        .search:focus {
-            border-color: #145c32;
-        }
-
-
-        /* CART BUTTON */
-
-        .cart-btn {
-            background: white;
-
-            border: 1px solid #dddddd;
-
-            padding: 13px 20px;
-
-            border-radius: 12px;
-
-            font-weight: bold;
-
-            white-space: nowrap;
-        }
-
-
-        .cart-btn:hover {
-            background: #f5f5f5;
-        }
-
-
-        .cart-count {
-            display: none;
-
-            background: #145c32;
-            color: white;
-
-            padding: 4px 8px;
-
-            border-radius: 50%;
-
-            margin-left: 5px;
-
-            font-size: 12px;
-        }
-
-
-        /* =========================================
-           MAIN
-        ========================================= */
-
-        main {
-            width: 90%;
-            max-width: 1400px;
-
-            margin: 30px auto;
-        }
-
-
-        /* =========================================
-           HERO
-        ========================================= */
-
-        .hero {
-            background: #eef6e8;
-
-            border-radius: 25px;
-
-            padding: 60px 55px;
+            height: 48px;
 
             display: flex;
-            justify-content: space-between;
             align-items: center;
 
-            gap: 30px;
+            background: #f3f3f3;
 
-            margin-bottom: 45px;
-        }
+            border-radius: 12px;
 
+            padding: 0 14px;
 
-        .hero-text {
-            max-width: 650px;
-        }
-
-
-        .tag {
-            display: inline-block;
-
-            background: #dcefd5;
-            color: #145c32;
-
-            padding: 9px 15px;
-
-            border-radius: 20px;
-
-            font-size: 12px;
-            font-weight: bold;
-
-            letter-spacing: 1px;
-
-            margin-bottom: 20px;
-        }
-
-
-        .hero h2 {
-            font-size: 52px;
-            line-height: 1.05;
-
-            margin-bottom: 20px;
-        }
-
-
-        .hero h2 span {
-            color: #145c32;
-        }
-
-
-        .hero p {
-            color: #5f6b63;
-
-            font-size: 18px;
-            line-height: 1.6;
-
-            margin-bottom: 25px;
-        }
-
-
-        .shop-btn {
-            display: inline-block;
-
-            background: #145c32;
-            color: white;
-
-            border: none;
-
-            padding: 14px 25px;
-
-            border-radius: 10px;
-
-            font-weight: bold;
-
-            text-decoration: none;
-        }
-
-
-        .shop-btn:hover {
-            opacity: 0.9;
-        }
-
-
-        .hero-image {
-            width: 300px;
-            height: 250px;
-
-            background: #d8ebce;
-
-            border-radius: 25px;
-
-            display: grid;
-            place-items: center;
-
-            font-size: 100px;
-        }
-
-
-        /* =========================================
-           CATEGORIES
-        ========================================= */
-
-        section {
-            margin-bottom: 45px;
-        }
-
-
-        section > h2 {
-            font-size: 27px;
-            margin-bottom: 20px;
-        }
-
-
-        .categories {
-            display: grid;
-
-            grid-template-columns:
-                repeat(auto-fit, minmax(120px, 1fr));
-
-            gap: 15px;
-        }
-
-
-        .category {
-            border: 1px solid #eeeeee;
-
-            border-radius: 15px;
-
-            padding: 20px 10px;
-
-            text-align: center;
-
-            background: white;
+            border:
+                1px solid transparent;
 
             transition: 0.2s;
         }
 
+        .search-box:focus-within {
+            background: white;
 
-        .category:hover {
-            transform: translateY(-3px);
+            border-color: #0c831f;
 
             box-shadow:
-                0 8px 20px rgba(0, 0, 0, 0.08);
+                0 0 0 3px
+                rgba(12, 131, 31, 0.08);
         }
 
-
-        .category-icon {
-            font-size: 35px;
-
-            margin-bottom: 10px;
+        .search-icon {
+            font-size: 21px;
+            margin-right: 10px;
         }
 
+        .search-box input {
+            flex: 1;
 
-        .category h3 {
-            font-size: 14px;
-        }
+            border: none;
+            outline: none;
 
+            background: transparent;
 
-        /* =========================================
-           PRODUCTS
-        ========================================= */
-
-        .products {
-            display: grid;
-
-            grid-template-columns:
-                repeat(auto-fill, minmax(210px, 1fr));
-
-            gap: 20px;
-        }
-
-
-        .product {
-            background: white;
-
-            border: 1px solid #eeeeee;
-
-            border-radius: 16px;
-
-            padding: 15px;
-
-            transition: 0.2s;
+            font-size: 15px;
 
             min-width: 0;
         }
 
+        .search-button {
+            border: none;
 
-        .product:hover {
-            transform: translateY(-3px);
+            background: transparent;
 
-            box-shadow:
-                0 8px 25px rgba(0, 0, 0, 0.08);
+            font-size: 19px;
+
+            padding: 7px;
         }
 
 
-        /* PRODUCT IMAGE */
+        /* LOGIN */
 
-        .product-image {
-            height: 170px;
+        .login-button {
+            border: none;
+            background: transparent;
 
-            border-radius: 12px;
+            font-size: 15px;
+            font-weight: 600;
 
-            background: #f5f7f3;
+            padding: 12px;
+        }
+
+/* MY ORDERS */
+
+.orders-button {
+    border: 1px solid #ddd;
+    background: white;
+    color: #222;
+    height: 42px;
+    padding: 0 14px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.orders-button:hover {
+    border-color: #0c831f;
+    color: #0c831f;
+    background: #f6fff7;
+    transform: translateY(-1px);
+}
+        /* CART */
+
+        .cart-button {
+            border: none;
+
+            background: #0c831f;
+
+            color: white;
+
+            height: 48px;
+
+            min-width: 125px;
+
+            border-radius: 10px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            gap: 8px;
+
+            font-weight: 800;
+
+            transition: 0.2s;
+        }
+
+        .cart-button:hover {
+            transform: translateY(-1px);
+
+            background: #096d19;
+        }
+
+        .cart-count {
+            min-width: 22px;
+            height: 22px;
+
+            border-radius: 50%;
+
+            background: white;
+            color: #0c831f;
 
             display: grid;
             place-items: center;
 
-            font-size: 75px;
-
-            margin-bottom: 14px;
+            font-size: 12px;
         }
 
 
-        .product h3 {
-            font-size: 17px;
+        /* =====================================================
+           CATEGORY BAR
+        ===================================================== */
 
-            margin-bottom: 7px;
+        .category-wrapper {
+            background: white;
+
+            border-bottom:
+                1px solid #ededed;
         }
 
+        .category-bar {
+            width: min(
+                1400px,
+                calc(100% - 30px)
+            );
 
-        .product small {
-            color: #777;
+            margin: auto;
 
-            display: block;
-
-            margin-bottom: 14px;
-        }
-
-
-        .product-bottom {
             display: flex;
+
+            gap: 10px;
+
+            overflow-x: auto;
+
+            padding: 12px 0;
+
+            scrollbar-width: none;
+        }
+
+        .category-bar::-webkit-scrollbar {
+            display: none;
+        }
+
+        .category-button {
+            border: none;
+
+            background: #f5f5f5;
+
+            padding: 10px 15px;
+
+            border-radius: 10px;
+
+            white-space: nowrap;
+
+            font-size: 13px;
+
+            font-weight: 600;
+
+            display: flex;
+            align-items: center;
+
+            gap: 6px;
+
+            transition: 0.2s;
+        }
+
+        .category-button:hover {
+            background: #e8f5e9;
+        }
+
+        .category-button.active {
+            background: #0c831f;
+            color: white;
+        }
+
+
+        /* =====================================================
+           HERO
+        ===================================================== */
+
+        .hero {
+            width: min(
+                1400px,
+                calc(100% - 30px)
+            );
+
+            margin: 20px auto;
+
+            min-height: 330px;
+
+            border-radius: 18px;
+
+            overflow: hidden;
+
+            background:
+                linear-gradient(
+                    110deg,
+                    #e8f5e9,
+                    #f9fff9
+                );
+
+            display: grid;
+
+            grid-template-columns:
+                1.2fr 0.8fr;
 
             align-items: center;
 
+            padding: 45px;
+        }
+
+        .hero-content {
+            max-width: 650px;
+        }
+
+        .hero-small {
+            display: inline-block;
+
+            padding: 7px 12px;
+
+            border-radius: 20px;
+
+            background: #dff4e3;
+
+            color: #0c831f;
+
+            font-weight: 700;
+
+            font-size: 13px;
+
+            margin-bottom: 14px;
+        }
+
+        .hero h1 {
+            font-size: clamp(
+                35px,
+                5vw,
+                60px
+            );
+
+            line-height: 1.05;
+
+            letter-spacing: -2px;
+
+            margin-bottom: 15px;
+        }
+
+        .hero p {
+            color: #666;
+
+            font-size: 17px;
+
+            line-height: 1.6;
+
+            max-width: 570px;
+
+            margin-bottom: 25px;
+        }
+
+        .shop-now-button {
+            border: none;
+
+            background: #0c831f;
+
+            color: white;
+
+            padding: 14px 24px;
+
+            border-radius: 10px;
+
+            font-weight: 800;
+
+            font-size: 15px;
+        }
+
+        .hero-art {
+            display: grid;
+            place-items: center;
+
+            font-size:
+                clamp(100px, 15vw, 190px);
+
+            user-select: none;
+        }
+
+
+        /* =====================================================
+           MAIN
+        ===================================================== */
+
+        .main {
+            width: min(
+                1400px,
+                calc(100% - 30px)
+            );
+
+            margin: auto;
+
+            padding-bottom: 70px;
+        }
+
+
+        /* =====================================================
+           SECTION HEADER
+        ===================================================== */
+
+        .section-header {
+            display: flex;
+
             justify-content: space-between;
 
-            gap: 10px;
+            align-items: center;
+
+            gap: 15px;
+
+            margin:
+                30px 0 18px;
         }
 
-
-        .product-bottom b {
-            font-size: 17px;
+        .section-header h2 {
+            font-size: 25px;
         }
 
-
-        /* ADD BUTTON */
-
-        .add-btn {
-            background: white;
-
-            color: #145c32;
-
-            border: 1px solid #145c32;
-
-            padding: 8px 17px;
-
-            border-radius: 8px;
-
-            font-weight: bold;
+        .section-header p {
+            color: #777;
 
             font-size: 13px;
         }
 
+        .view-all {
+            border: none;
 
-        .add-btn:hover {
-            background: #145c32;
-            color: white;
+            background: transparent;
+
+            color: #0c831f;
+
+            font-weight: 800;
+
+            cursor: pointer;
         }
 
 
-        /* =========================================
-           DEAL BANNER
-        ========================================= */
+        /* =====================================================
+           PRODUCT GRID
+        ===================================================== */
 
-        .deal-banner {
-            background: #145c32;
+        .product-grid {
+            display: grid;
 
-            color: white;
+            grid-template-columns:
+                repeat(
+                    5,
+                    minmax(0, 1fr)
+                );
 
-            border-radius: 20px;
+            gap: 16px;
+        }
 
-            padding: 30px;
+        .product-card {
+            position: relative;
 
+            background: white;
+
+            border:
+                1px solid #eeeeee;
+
+            border-radius: 14px;
+
+            padding: 12px;
+
+            min-width: 0;
+
+            transition:
+                transform 0.2s,
+                box-shadow 0.2s;
+        }
+
+        .product-card:hover {
+            transform:
+                translateY(-3px);
+
+            box-shadow:
+                0 10px 30px
+                rgba(0,0,0,0.08);
+        }
+
+        .product-image {
+            width: 100%;
+
+            aspect-ratio: 1 / 1;
+
+            border-radius: 12px;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    #f7f7f7,
+                    #eeeeee
+                );
+
+            display: grid;
+
+            place-items: center;
+
+            font-size: 76px;
+
+            cursor: pointer;
+
+            user-select: none;
+
+            transition: 0.2s;
+        }
+
+        .product-image:hover {
+            transform: scale(1.02);
+        }
+
+        .discount-badge {
+            display: inline-block;
+
+            margin-top: 9px;
+
+            background: #e8f5e9;
+
+            color: #0c831f;
+
+            padding: 4px 7px;
+
+            border-radius: 5px;
+
+            font-size: 10px;
+
+            font-weight: 800;
+        }
+
+        .product-name {
+            margin-top: 8px;
+
+            font-size: 14px;
+
+            line-height: 1.35;
+
+            min-height: 38px;
+        }
+
+        .product-unit {
+            color: #777;
+
+            font-size: 12px;
+
+            margin-top: 5px;
+        }
+
+        .product-bottom {
             display: flex;
 
             justify-content: space-between;
 
             align-items: center;
 
-            gap: 20px;
+            gap: 8px;
+
+            margin-top: 12px;
         }
 
+        .product-price {
+            font-size: 14px;
 
-        .deal-banner h2 {
-            margin-bottom: 8px;
+            font-weight: 900;
         }
 
+        .add-button {
+            border:
+                1px solid #0c831f;
 
-        .deal-banner p {
-            opacity: 0.85;
-        }
-
-
-        .deal-badge {
             background: white;
 
-            color: #145c32;
+            color: #0c831f;
 
-            padding: 14px 20px;
+            border-radius: 7px;
 
-            border-radius: 12px;
+            padding: 7px 16px;
 
-            font-weight: bold;
+            font-size: 12px;
 
-            white-space: nowrap;
+            font-weight: 900;
+
+            min-width: 65px;
+        }
+
+        .add-button:hover {
+            background: #0c831f;
+            color: white;
         }
 
 
-        /* =========================================
+        /* =====================================================
+           QUANTITY CONTROL
+        ===================================================== */
+
+        .quantity-control {
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            min-width: 80px;
+
+            border:
+                1px solid #0c831f;
+
+            background: #0c831f;
+
+            color: white;
+
+            border-radius: 7px;
+
+            overflow: hidden;
+        }
+
+        .quantity-control button {
+            width: 28px;
+            height: 30px;
+
+            border: none;
+
+            background: transparent;
+
+            color: white;
+
+            font-size: 19px;
+
+            font-weight: 700;
+
+            line-height: 1;
+        }
+
+        .quantity-control strong {
+            font-size: 13px;
+
+            min-width: 20px;
+
+            text-align: center;
+        }
+
+
+        /* =====================================================
+           EMPTY RESULT
+        ===================================================== */
+
+        .empty-result {
+            grid-column: 1 / -1;
+
+            background: white;
+
+            border-radius: 15px;
+
+            padding: 70px 20px;
+
+            text-align: center;
+        }
+
+        .empty-result h2 {
+            margin-bottom: 10px;
+        }
+
+        .empty-result p {
+            color: #777;
+        }
+
+
+        /* =====================================================
            FEATURES
-        ========================================= */
+        ===================================================== */
 
         .features {
             display: grid;
 
             grid-template-columns:
-                repeat(auto-fit, minmax(220px, 1fr));
+                repeat(4, 1fr);
 
-            gap: 20px;
+            gap: 15px;
+
+            margin-top: 45px;
         }
 
+        .feature-card {
+            background: white;
 
-        .feature {
-            background: #f8faf7;
+            padding: 22px;
 
-            padding: 25px;
+            border-radius: 14px;
 
-            border-radius: 15px;
+            border:
+                1px solid #eee;
 
-            text-align: center;
+            display: flex;
+
+            gap: 14px;
+
+            align-items: center;
         }
-
 
         .feature-icon {
-            font-size: 35px;
+            width: 48px;
+            height: 48px;
 
-            margin-bottom: 10px;
+            flex-shrink: 0;
+
+            background: #e8f5e9;
+
+            border-radius: 12px;
+
+            display: grid;
+            place-items: center;
+
+            font-size: 23px;
         }
 
-
-        .feature h3 {
-            margin-bottom: 7px;
-        }
-
-
-        .feature p {
-            color: #777;
-
+        .feature-card h3 {
             font-size: 14px;
 
-            line-height: 1.5;
+            margin-bottom: 5px;
+        }
+
+        .feature-card p {
+            color: #777;
+
+            font-size: 12px;
+
+            line-height: 1.4;
         }
 
 
-        /* =========================================
+        /* =====================================================
            FOOTER
-        ========================================= */
+        ===================================================== */
 
-        footer {
-            background: #10291b;
+        .footer {
+            background: #1d1d1d;
 
             color: white;
 
-            padding: 45px 7%;
-
-            margin-top: 50px;
+            margin-top: 40px;
         }
 
-
-        .footer-content {
-            max-width: 1400px;
+        .footer-inner {
+            width: min(
+                1400px,
+                calc(100% - 30px)
+            );
 
             margin: auto;
 
+            padding:
+                50px 0 25px;
+        }
+
+        .footer-grid {
             display: grid;
 
             grid-template-columns:
-                repeat(auto-fit, minmax(220px, 1fr));
+                1.5fr repeat(3, 1fr);
 
-            gap: 30px;
+            gap: 35px;
         }
 
+        .footer-brand {
+            max-width: 330px;
+        }
 
-        footer h2 {
+        .footer-logo {
+            font-size: 27px;
+
+            font-weight: 900;
+
+            margin-bottom: 13px;
+        }
+
+        .footer-brand p {
+            color: #aaa;
+
+            font-size: 13px;
+
+            line-height: 1.7;
+        }
+
+        .footer-column h3 {
+            font-size: 15px;
+
+            margin-bottom: 15px;
+        }
+
+        .footer-column a {
+            display: block;
+
+            color: #aaa;
+
+            font-size: 13px;
+
             margin-bottom: 10px;
         }
 
-
-        footer h3 {
-            margin-bottom: 12px;
+        .footer-column a:hover {
+            color: white;
         }
 
+        .footer-bottom {
+            border-top:
+                1px solid #383838;
 
-        footer p {
-            color: #c9d4cc;
-
-            line-height: 1.6;
-
-            font-size: 14px;
-        }
-
-
-        footer ul {
-            list-style: none;
-        }
-
-
-        footer li {
-            color: #c9d4cc;
-
-            margin-bottom: 8px;
-
-            font-size: 14px;
-        }
-
-
-        .copyright {
-            max-width: 1400px;
-
-            margin: 35px auto 0;
+            margin-top: 35px;
 
             padding-top: 20px;
 
-            border-top: 1px solid #2c4937;
+            color: #888;
 
-            color: #aebbb2;
+            font-size: 12px;
+
+            display: flex;
+
+            justify-content: space-between;
+
+            gap: 15px;
+        }
+
+
+        /* =====================================================
+           OVERLAY
+        ===================================================== */
+
+        .overlay {
+            position: fixed;
+
+            inset: 0;
+
+            z-index: 2000;
+
+            background:
+                rgba(
+                    0,
+                    0,
+                    0,
+                    0.55
+                );
+
+            opacity: 0;
+
+            visibility: hidden;
+
+            pointer-events: none;
+
+            transition: 0.25s;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+        }
+
+        .overlay.open {
+            opacity: 1;
+
+            visibility: visible;
+
+            pointer-events: auto;
+        }
+
+
+        /* =====================================================
+           CART DRAWER
+        ===================================================== */
+
+        #cartOverlay {
+            justify-content: flex-end;
+            align-items: stretch;
+        }
+
+        .cart-panel {
+            width: min(
+                500px,
+                100%
+            );
+
+            height: 100%;
+
+            background: white;
+
+            transform:
+                translateX(100%);
+
+            transition:
+                transform 0.3s;
+
+            display: flex;
+
+            flex-direction: column;
+        }
+
+        #cartOverlay.open
+        .cart-panel {
+            transform:
+                translateX(0);
+        }
+
+        .panel-header {
+            min-height: 68px;
+
+            padding:
+                0 20px;
+
+            border-bottom:
+                1px solid #eee;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+        }
+
+        .panel-header h2 {
+            font-size: 19px;
+        }
+
+        .close-button {
+            width: 36px;
+            height: 36px;
+
+            border: none;
+
+            background: #f4f4f4;
+
+            border-radius: 50%;
+
+            font-size: 21px;
+
+            display: grid;
+            place-items: center;
+        }
+
+        .cart-items {
+            flex: 1;
+
+            overflow-y: auto;
+
+            padding: 15px 20px;
+        }
+
+        .cart-item {
+            display: grid;
+
+            grid-template-columns:
+                65px 1fr auto;
+
+            gap: 12px;
+
+            align-items: center;
+
+            padding:
+                12px 0;
+
+            border-bottom:
+                1px solid #eee;
+        }
+
+        .cart-item-icon {
+            width: 65px;
+            height: 65px;
+
+            border-radius: 10px;
+
+            background: #f4f4f4;
+
+            display: grid;
+            place-items: center;
+
+            font-size: 37px;
+        }
+
+        .cart-item-name {
+            font-size: 14px;
+
+            font-weight: 700;
+
+            margin-bottom: 5px;
+        }
+
+        .cart-item small {
+            display: block;
+
+            color: #777;
+
+            font-size: 11px;
+
+            margin-bottom: 8px;
+        }
+
+        .cart-quantity {
+            display: inline-flex;
+
+            align-items: center;
+
+            background: #0c831f;
+
+            color: white;
+
+            border-radius: 6px;
+
+            overflow: hidden;
+        }
+
+        .cart-quantity button {
+            border: none;
+
+            background: transparent;
+
+            color: white;
+
+            width: 28px;
+            height: 28px;
+
+            font-size: 17px;
+        }
+
+        .cart-quantity strong {
+            min-width: 24px;
+
+            text-align: center;
+
+            font-size: 12px;
+        }
+
+        .cart-item-price {
+            font-weight: 800;
 
             font-size: 13px;
         }
 
+        .cart-summary {
+            border-top:
+                1px solid #eee;
 
-        /* =========================================
+            padding:
+                18px 20px;
+
+            background: white;
+        }
+
+        .summary-row {
+            display: flex;
+
+            justify-content: space-between;
+
+            gap: 15px;
+
+            margin-bottom: 11px;
+
+            font-size: 14px;
+        }
+
+        .summary-total {
+            font-size: 17px;
+
+            padding-top: 10px;
+
+            border-top:
+                1px dashed #ddd;
+
+            margin-top: 10px;
+        }
+
+        .checkout-button {
+            width: 100%;
+
+            border: none;
+
+            background: #0c831f;
+
+            color: white;
+
+            border-radius: 10px;
+
+            padding: 14px;
+
+            font-weight: 800;
+
+            margin-top: 10px;
+        }
+
+        .checkout-button:hover {
+            background: #096d19;
+        }
+
+
+        /* =====================================================
+           PRODUCT DETAIL
+        ===================================================== */
+
+        #productOverlay {
+            overflow-y: auto;
+
+            padding: 20px;
+        }
+
+        .product-detail-panel {
+            width: min(
+                1000px,
+                100%
+            );
+
+            max-height: 92vh;
+
+            overflow-y: auto;
+
+            background: white;
+
+            border-radius: 18px;
+
+            padding: 22px;
+        }
+
+        .product-detail {
+            display: grid;
+
+            grid-template-columns:
+                1fr 1fr;
+
+            gap: 35px;
+
+            align-items: center;
+        }
+
+        .main-product-image {
+            width: 100%;
+
+            aspect-ratio: 1 / 1;
+
+            max-height: 500px;
+
+            border-radius: 18px;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    #f7f7f7,
+                    #ededed
+                );
+
+            display: grid;
+
+            place-items: center;
+
+            font-size: 180px;
+
+            user-select: none;
+        }
+
+        .image-gallery {
+            display: grid;
+
+            grid-template-columns:
+                repeat(4, 1fr);
+
+            gap: 10px;
+
+            margin-top: 12px;
+        }
+
+        .gallery-button {
+            border:
+                1px solid #eee;
+
+            background: #f7f7f7;
+
+            border-radius: 10px;
+
+            height: 75px;
+
+            font-size: 35px;
+        }
+
+        .gallery-button:hover {
+            border-color: #0c831f;
+        }
+
+        .product-detail h1 {
+            font-size: 32px;
+
+            line-height: 1.15;
+
+            margin:
+                12px 0;
+        }
+
+        .detail-description {
+            color: #666;
+
+            line-height: 1.6;
+
+            margin-bottom: 18px;
+        }
+
+        .detail-price {
+            font-size: 30px;
+
+            font-weight: 900;
+
+            margin-top: 20px;
+        }
+
+
+        /* =====================================================
+           CHECKOUT
+        ===================================================== */
+
+        .checkout-panel {
+            width: min(
+                560px,
+                calc(100% - 30px)
+            );
+
+            max-height: 92vh;
+
+            overflow-y: auto;
+
+            background: white;
+
+            border-radius: 18px;
+
+            padding: 25px;
+        }
+
+        .checkout-panel h2 {
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        .form-group label {
+            display: block;
+
+            font-size: 13px;
+
+            font-weight: 700;
+
+            margin-bottom: 7px;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+
+            border:
+                1px solid #ddd;
+
+            border-radius: 9px;
+
+            padding: 12px;
+
+            outline: none;
+
+            background: white;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+
+            min-height: 90px;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            border-color: #0c831f;
+
+            box-shadow:
+                0 0 0 3px
+                rgba(
+                    12,
+                    131,
+                    31,
+                    0.08
+                );
+        }
+
+        .payment-options {
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 10px;
+        }
+
+        .payment-option {
+            border:
+                1px solid #ddd;
+
+            border-radius: 9px;
+
+            padding: 12px;
+
+            text-align: center;
+
+            cursor: pointer;
+
+            font-size: 12px;
+        }
+
+        .payment-option:hover {
+            border-color: #0c831f;
+        }
+
+
+        /* =====================================================
+           TOAST
+        ===================================================== */
+
+        #toast {
+            position: fixed;
+
+            left: 50%;
+
+            bottom: 25px;
+
+            z-index: 5000;
+
+            transform:
+                translate(-50%, 30px);
+
+            opacity: 0;
+
+            visibility: hidden;
+
+            background: #222;
+
+            color: white;
+
+            padding:
+                12px 20px;
+
+            border-radius: 9px;
+
+            font-size: 14px;
+
+            font-weight: 600;
+
+            box-shadow:
+                0 10px 30px
+                rgba(0,0,0,0.2);
+
+            transition: 0.25s;
+
+            max-width:
+                calc(100% - 30px);
+
+            text-align: center;
+        }
+
+        #toast.show {
+            opacity: 1;
+
+            visibility: visible;
+
+            transform:
+                translate(-50%, 0);
+        }
+
+
+        /* =====================================================
            MOBILE
-        ========================================= */
+        ===================================================== */
 
-        @media (max-width: 800px) {
+        @media (max-width: 1100px) {
 
-            header {
-                flex-wrap: wrap;
-
-                gap: 12px;
-
-                padding: 12px 4%;
+            .product-grid {
+                grid-template-columns:
+                    repeat(4, 1fr);
             }
 
+            .features {
+                grid-template-columns:
+                    repeat(2, 1fr);
+            }
+
+        }
+
+
+        @media (max-width: 850px) {
+
+            .header-inner {
+                flex-wrap: wrap;
+
+                padding:
+                    10px 0;
+
+                gap: 8px;
+            }
 
             .logo {
                 min-width: auto;
             }
 
+            .location-button {
+                min-width: 0;
 
-            .location {
-                display: none;
+                margin-left: auto;
             }
 
-
-            .search {
-                order: 3;
+            .search-box {
+                order: 5;
 
                 flex-basis: 100%;
             }
 
-
-            .cart-btn {
-                margin-left: auto;
+            .login-button {
+                display: none;
             }
-
 
             .hero {
-                padding: 35px 25px;
+                grid-template-columns: 1fr;
 
-                flex-direction: column;
+                padding: 30px;
 
-                align-items: flex-start;
+                text-align: center;
             }
 
-
-            .hero h2 {
-                font-size: 38px;
+            .hero-content {
+                margin: auto;
             }
 
-
-            .hero-image {
-                width: 100%;
+            .hero p {
+                margin-left: auto;
+                margin-right: auto;
             }
 
+            .hero-art {
+                display: none;
+            }
 
-            main {
-                width: 92%;
+            .product-grid {
+                grid-template-columns:
+                    repeat(3, 1fr);
+            }
+
+            .footer-grid {
+                grid-template-columns:
+                    repeat(2, 1fr);
             }
 
         }
 
 
-        @media (max-width: 500px) {
+        @media (max-width: 600px) {
 
-            .products {
+            .header-inner,
+            .category-bar,
+            .main,
+            .hero,
+            .footer-inner {
+                width:
+                    calc(100% - 20px);
+            }
+
+            .header-inner {
+                min-height: 65px;
+            }
+
+            .logo {
+                font-size: 22px;
+            }
+
+            .logo-icon {
+                width: 35px;
+                height: 35px;
+
+                font-size: 18px;
+            }
+
+            .location-button {
+                padding: 5px;
+
+                max-width: 130px;
+            }
+
+            .location-value {
+                max-width: 120px;
+
+                font-size: 12px;
+            }
+
+            .cart-button {
+                min-width: 95px;
+
+                height: 42px;
+
+                font-size: 12px;
+            }
+
+            .hero {
+                margin-top: 12px;
+
+                padding: 25px 18px;
+
+                min-height: 280px;
+
+                border-radius: 14px;
+            }
+
+            .hero h1 {
+                font-size: 35px;
+            }
+
+            .hero p {
+                font-size: 14px;
+            }
+
+            .section-header h2 {
+                font-size: 21px;
+            }
+
+            .product-grid {
                 grid-template-columns:
-                    repeat(2, minmax(0, 1fr));
+                    repeat(2, 1fr);
 
                 gap: 10px;
             }
 
-
-            .product {
-                padding: 10px;
+            .product-card {
+                padding: 9px;
             }
-
 
             .product-image {
-                height: 130px;
-
-                font-size: 55px;
+                font-size: 58px;
             }
 
-
-            .product h3 {
-                font-size: 14px;
+            .product-name {
+                font-size: 13px;
             }
-
 
             .product-bottom {
                 align-items: flex-end;
@@ -737,14 +1654,62 @@
                 flex-direction: column;
             }
 
+            .product-price {
+                align-self: flex-start;
+            }
 
-            .add-btn {
+            .add-button,
+            .quantity-control {
                 width: 100%;
             }
 
+            .features {
+                grid-template-columns: 1fr;
+            }
 
-            .hero h2 {
-                font-size: 32px;
+            .footer-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-bottom {
+                flex-direction: column;
+            }
+
+            .product-detail {
+                grid-template-columns: 1fr;
+
+                gap: 20px;
+            }
+
+            .product-detail-panel {
+                padding: 15px;
+
+                border-radius: 12px;
+            }
+
+            .main-product-image {
+                font-size: 120px;
+            }
+
+            .product-detail h1 {
+                font-size: 25px;
+            }
+
+            .payment-options {
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+
+        @media (max-width: 380px) {
+
+            .cart-button {
+                min-width: 75px;
+            }
+
+            .cart-button span:first-child {
+                display: none;
             }
 
         }
@@ -756,864 +1721,805 @@
 <body>
 
 
-    <!-- =========================================
+    <!-- =====================================================
          HEADER
-    ========================================== -->
+    ====================================================== -->
 
-    <header>
+    <header class="header">
 
-        <div class="logo">
+        <div class="header-inner">
 
-            <div class="logo-box">
-                F
+
+            <!-- LOGO -->
+
+            <a
+                href="#"
+                class="logo"
+            >
+
+                <span class="logo-icon">
+                    🛒
+                </span>
+
+                <span>
+                    Furzo
+                </span>
+
+            </a>
+
+
+            <!-- LOCATION -->
+
+            <button
+                type="button"
+                class="location-button"
+                id="locationButton"
+            >
+
+                <span class="location-title">
+                    Delivery to
+                </span>
+
+                <span
+                    class="location-value"
+                    id="addressText"
+                >
+                    Select address
+                </span>
+<span
+    style="
+        font-size:12px;
+        color:#0c831f;
+        font-weight:700;
+        margin-left:8px;
+    "
+>
+    Change
+</span>
+            </button>
+
+
+            <!-- SEARCH -->
+
+            <div
+                class="search-box"
+            >
+
+                <span
+                    class="search-icon"
+                >
+                    🔍
+                </span>
+
+                <input
+                    type="search"
+                    id="searchInput"
+                    placeholder="Search for products..."
+                    autocomplete="off"
+                >
+
+                <button
+                    type="button"
+                    class="search-button"
+                    id="searchButton"
+                    aria-label="Search"
+                >
+                    →
+                </button>
+
             </div>
 
-            <div>
-                <h1>Furzo</h1>
 
-                <small>EVERYTHING YOU NEED</small>
-            </div>
+            <!-- LOGIN -->
+
+            <button
+                type="button"
+                class="login-button"
+                id="loginButton"
+            >
+                Login
+            </button>
+<!-- MY ORDERS -->
+
+<button
+    type="button"
+    class="orders-button"
+    id="ordersButton"
+>
+    📦 Orders
+</button>
+
+            <!-- CART -->
+
+            <button
+                type="button"
+                class="cart-button"
+                id="cartButton"
+            >
+
+                <span>
+                    🛒 Cart
+                </span>
+
+                <span
+                    class="cart-count"
+                    id="cartCount"
+                >
+                    0
+                </span>
+
+            </button>
 
         </div>
-
-
-        <div class="location">
-
-            Deliver to
-
-            <b>📍 Your Location</b>
-
-        </div>
-
-
-        <input
-            class="search"
-            type="search"
-            placeholder="Search for groceries, fruits, snacks..."
-        >
-
-
-        <button
-            class="cart-btn"
-            id="cartBtn"
-        >
-            🛒 Cart
-
-            <span class="cart-count">
-                0
-            </span>
-
-        </button>
 
     </header>
 
 
+    <!-- =====================================================
+         CATEGORY BAR
+    ====================================================== -->
 
-    <!-- =========================================
+    <div class="category-wrapper">
+
+        <nav
+            class="category-bar"
+            id="categoryBar"
+            aria-label="Product categories"
+        >
+        </nav>
+
+    </div>
+
+
+    <!-- =====================================================
+         HERO
+    ====================================================== -->
+
+    <section class="hero">
+
+        <div class="hero-content">
+
+            <span class="hero-small">
+                ⚡ Fast delivery
+            </span>
+
+            <h1>
+                Everything you need,
+                delivered fast.
+            </h1>
+
+            <p>
+                Fresh groceries, snacks,
+                beverages, dairy products
+                and everyday essentials
+                delivered straight to your door.
+            </p>
+
+            <button
+                type="button"
+                class="shop-now-button"
+                id="shopNowButton"
+            >
+                Shop now
+            </button>
+
+        </div>
+
+
+        <div
+            class="hero-art"
+            aria-hidden="true"
+        >
+            🛍️
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
          MAIN
-    ========================================== -->
+    ====================================================== -->
 
-    <main>
-
-
-        <!-- HERO -->
-
-        <section class="hero">
-
-            <div class="hero-text">
-
-                <span class="tag">
-                    GROCERIES AT YOUR DOOR
-                </span>
+    <main class="main">
 
 
-                <h2>
-                    Everything you need,
-                    <span>right when you need it.</span>
-                </h2>
+        <!-- PRODUCTS -->
+
+        <section
+            id="productsSection"
+        >
+
+            <div
+                class="section-header"
+            >
+
+                <div>
+
+                    <h2>
+                        Popular products
+                    </h2>
+
+                    <p>
+                        Fresh picks for your
+                        everyday needs
+                    </p>
+
+                </div>
 
 
-                <p>
-                    Fresh groceries, daily essentials,
-                    snacks and more delivered straight
-                    to your doorstep.
-                </p>
-
-
-                <a
-                    href="#products"
-                    class="shop-btn"
+                <button
+                    type="button"
+                    class="view-all"
+                    id="viewAllButton"
                 >
-                    Shop Now
-                </a>
+                    View all
+                </button>
 
             </div>
 
 
-            <div class="hero-image">
-                🛍️
-            </div>
-
-        </section>
-
-
-
-        <!-- =====================================
-             CATEGORIES
-        ====================================== -->
-
-        <section>
-
-            <h2>
-                Shop by Category
-            </h2>
-
-
-            <div class="categories">
-
-
-                <div class="category">
-
-                    <div class="category-icon">
-                        🥦
-                    </div>
-
-                    <h3>Vegetables</h3>
-
-                </div>
-
-
-                <div class="category">
-
-                    <div class="category-icon">
-                        🍎
-                    </div>
-
-                    <h3>Fruits</h3>
-
-                </div>
-
-
-                <div class="category">
-
-                    <div class="category-icon">
-                        🥛
-                    </div>
-
-                    <h3>Dairy</h3>
-
-                </div>
-
-
-                <div class="category">
-
-                    <div class="category-icon">
-                        🍪
-                    </div>
-
-                    <h3>Snacks</h3>
-
-                </div>
-
-
-                <div class="category">
-
-                    <div class="category-icon">
-                        🥤
-                    </div>
-
-                    <h3>Drinks</h3>
-
-                </div>
-
-
-                <div class="category">
-
-                    <div class="category-icon">
-                        🧴
-                    </div>
-
-                    <h3>Personal Care</h3>
-
-                </div>
-
-
-                <div class="category">
-
-                    <div class="category-icon">
-                        🧹
-                    </div>
-
-                    <h3>Home Care</h3>
-
-                </div>
-
-
-                <div class="category">
-
-                    <div class="category-icon">
-                        🐶
-                    </div>
-
-                    <h3>Pet Care</h3>
-
-                </div>
-
-
+            <div
+                class="product-grid"
+                id="productGrid"
+            >
             </div>
 
         </section>
 
 
+        <!-- =================================================
+             FEATURES
+        ================================================== -->
 
-        <!-- =====================================
-             DEAL
-        ====================================== -->
-
-        <section class="deal-banner">
-
-            <div>
-
-                <h2>
-                    ⚡ Super Saver Deals
-                </h2>
-
-                <p>
-                    Save more on your everyday essentials.
-                </p>
-
-            </div>
+        <section class="features">
 
 
-            <div class="deal-badge">
-                UP TO 40% OFF
-            </div>
+            <div class="feature-card">
 
-        </section>
-
-
-
-        <!-- =====================================
-             BEST SELLERS
-        ====================================== -->
-
-        <section id="products">
-
-            <h2>
-                Best Sellers 🔥
-            </h2>
-
-
-            <div class="products">
-
-
-                <!-- PRODUCT 1 -->
-
-                <div class="product">
-
-                    <div class="product-image">
-                        🥛
-                    </div>
-
-                    <h3>
-                        Amul Taaza Milk
-                    </h3>
-
-                    <small>
-                        1 L
-                    </small>
-
-                    <div class="product-bottom">
-
-                        <b>
-                            ₹57
-                        </b>
-
-                        <button class="add-btn">
-                            ADD
-                        </button>
-
-                    </div>
-
+                <div class="feature-icon">
+                    ⚡
                 </div>
 
-
-
-                <!-- PRODUCT 2 -->
-
-                <div class="product">
-
-                    <div class="product-image">
-                        🍌
-                    </div>
+                <div>
 
                     <h3>
-                        Banana (Kela)
-                    </h3>
-
-                    <small>
-                        1 kg
-                    </small>
-
-                    <div class="product-bottom">
-
-                        <b>
-                            ₹25
-                        </b>
-
-                        <button class="add-btn">
-                            ADD
-                        </button>
-
-                    </div>
-
-                </div>
-
-
-
-                <!-- PRODUCT 3 -->
-
-                <div class="product">
-
-                    <div class="product-image">
-                        🥔
-                    </div>
-
-                    <h3>
-                        Fresh Potatoes
-                    </h3>
-
-                    <small>
-                        1 kg
-                    </small>
-
-                    <div class="product-bottom">
-
-                        <b>
-                            ₹35
-                        </b>
-
-                        <button class="add-btn">
-                            ADD
-                        </button>
-
-                    </div>
-
-                </div>
-
-
-
-                <!-- PRODUCT 4 -->
-
-                <div class="product">
-
-                    <div class="product-image">
-                        🍅
-                    </div>
-
-                    <h3>
-                        Fresh Tomatoes
-                    </h3>
-
-                    <small>
-                        1 kg
-                    </small>
-
-                    <div class="product-bottom">
-
-                        <b>
-                            ₹40
-                        </b>
-
-                        <button class="add-btn">
-                            ADD
-                        </button>
-
-                    </div>
-
-                </div>
-
-
-
-                <!-- PRODUCT 5 -->
-
-                <div class="product">
-
-                    <div class="product-image">
-                        🍎
-                    </div>
-
-                    <h3>
-                        Fresh Apples
-                    </h3>
-
-                    <small>
-                        1 kg
-                    </small>
-
-                    <div class="product-bottom">
-
-                        <b>
-                            ₹140
-                        </b>
-
-                        <button class="add-btn">
-                            ADD
-                        </button>
-
-                    </div>
-
-                </div>
-
-
-
-                <!-- PRODUCT 6 -->
-
-                <div class="product">
-
-                    <div class="product-image">
-                        🍞
-                    </div>
-
-                    <h3>
-                        Sandwich Bread
-                    </h3>
-
-                    <small>
-                        400 g
-                    </small>
-
-                    <div class="product-bottom">
-
-                        <b>
-                            ₹45
-                        </b>
-
-                        <button class="add-btn">
-                            ADD
-                        </button>
-
-                    </div>
-
-                </div>
-
-
-
-                <!-- PRODUCT 7 -->
-
-                <div class="product">
-
-                    <div class="product-image">
-                        🍪
-                    </div>
-
-                    <h3>
-                        Parle-G Biscuits
-                    </h3>
-
-                    <small>
-                        800 g
-                    </small>
-
-                    <div class="product-bottom">
-
-                        <b>
-                            ₹75
-                        </b>
-
-                        <button class="add-btn">
-                            ADD
-                        </button>
-
-                    </div>
-
-                </div>
-
-
-
-                <!-- PRODUCT 8 -->
-
-                <div class="product">
-
-                    <div class="product-image">
-                        🥤
-                    </div>
-
-                    <h3>
-                        Coca Cola
-                    </h3>
-
-                    <small>
-                        750 ml
-                    </small>
-
-                    <div class="product-bottom">
-
-                        <b>
-                            ₹45
-                        </b>
-
-                        <button class="add-btn">
-                            ADD
-                        </button>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-        </section>
-
-
-
-        <!-- =====================================
-             DAILY ESSENTIALS
-        ====================================== -->
-
-        <section>
-
-            <h2>
-                Daily Essentials
-            </h2>
-
-
-            <div class="products">
-
-
-                <div class="product">
-
-                    <div class="product-image">
-                        🍚
-                    </div>
-
-                    <h3>
-                        India Gate Rice
-                    </h3>
-
-                    <small>
-                        5 kg
-                    </small>
-
-                    <div class="product-bottom">
-
-                        <b>
-                            ₹520
-                        </b>
-
-                        <button class="add-btn">
-                            ADD
-                        </button>
-
-                    </div>
-
-                </div>
-
-
-                <div class="product">
-
-                    <div class="product-image">
-                        🌾
-                    </div>
-
-                    <h3>
-                        Aashirvaad Atta
-                    </h3>
-
-                    <small>
-                        5 kg
-                    </small>
-
-                    <div class="product-bottom">
-
-                        <b>
-                            ₹290
-                        </b>
-
-                        <button class="add-btn">
-                            ADD
-                        </button>
-
-                    </div>
-
-                </div>
-
-
-                <div class="product">
-
-                    <div class="product-image">
-                        🫗
-                    </div>
-
-                    <h3>
-                        Fortune Sunlite Oil
-                    </h3>
-
-                    <small>
-                        1 L
-                    </small>
-
-                    <div class="product-bottom">
-
-                        <b>
-                            ₹110
-                        </b>
-
-                        <button class="add-btn">
-                            ADD
-                        </button>
-
-                    </div>
-
-                </div>
-
-
-                <div class="product">
-
-                    <div class="product-image">
-                        🧂
-                    </div>
-
-                    <h3>
-                        Tata Salt
-                    </h3>
-
-                    <small>
-                        1 kg
-                    </small>
-
-                    <div class="product-bottom">
-
-                        <b>
-                            ₹28
-                        </b>
-
-                        <button class="add-btn">
-                            ADD
-                        </button>
-
-                    </div>
-
-                </div>
-
-
-            </div>
-
-        </section>
-
-
-
-        <!-- =====================================
-             WHY FURZO
-        ====================================== -->
-
-        <section>
-
-            <h2>
-                Why Shop With Furzo?
-            </h2>
-
-
-            <div class="features">
-
-
-                <div class="feature">
-
-                    <div class="feature-icon">
-                        ⚡
-                    </div>
-
-                    <h3>
-                        Fast Delivery
+                        Fast delivery
                     </h3>
 
                     <p>
-                        Get your everyday essentials
-                        delivered quickly.
+                        Get your everyday
+                        essentials quickly.
                     </p>
 
                 </div>
 
+            </div>
 
-                <div class="feature">
 
-                    <div class="feature-icon">
-                        🥬
-                    </div>
+            <div class="feature-card">
+
+                <div class="feature-icon">
+                    🥬
+                </div>
+
+                <div>
 
                     <h3>
-                        Fresh Products
+                        Fresh products
                     </h3>
 
                     <p>
-                        Quality groceries selected
-                        for your everyday needs.
+                        Quality products
+                        selected for you.
                     </p>
 
                 </div>
-
-
-                <div class="feature">
-
-                    <div class="feature-icon">
-                        💰
-                    </div>
-
-                    <h3>
-                        Great Prices
-                    </h3>
-
-                    <p>
-                        Everyday products at prices
-                        that make sense.
-                    </p>
-
-                </div>
-
-
-                <div class="feature">
-
-                    <div class="feature-icon">
-                        🔒
-                    </div>
-
-                    <h3>
-                        Secure Shopping
-                    </h3>
-
-                    <p>
-                        A simple and secure shopping
-                        experience.
-                    </p>
-
-                </div>
-
 
             </div>
+
+
+            <div class="feature-card">
+
+                <div class="feature-icon">
+                    💰
+                </div>
+
+                <div>
+
+                    <h3>
+                        Great prices
+                    </h3>
+
+                    <p>
+                        Everyday products
+                        at competitive prices.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="feature-card">
+
+                <div class="feature-icon">
+                    🔒
+                </div>
+
+                <div>
+
+                    <h3>
+                        Secure checkout
+                    </h3>
+
+                    <p>
+                        Safe and simple
+                        checkout experience.
+                    </p>
+
+                </div>
+
+            </div>
+
 
         </section>
 
     </main>
 
 
-
-    <!-- =========================================
+    <!-- =====================================================
          FOOTER
-    ========================================== -->
+    ====================================================== -->
 
-    <footer>
+    <footer class="footer">
 
-        <div class="footer-content">
+        <div class="footer-inner">
 
 
-            <div>
+            <div class="footer-grid">
 
-                <h2>
-                    Furzo
-                </h2>
 
-                <p>
-                    Everything you need.
-                    Right when you need it.
-                </p>
+                <div class="footer-brand">
+
+                    <div class="footer-logo">
+                        🛒 Furzo
+                    </div>
+
+                    <p>
+                        Your everyday online
+                        grocery store for fresh
+                        food, beverages,
+                        household essentials
+                        and much more.
+                    </p>
+
+                </div>
+
+
+                <div class="footer-column">
+
+                    <h3>
+                        Categories
+                    </h3>
+
+                    <a href="#">
+                        Fruits & Vegetables
+                    </a>
+
+                    <a href="#">
+                        Dairy & Breakfast
+                    </a>
+
+                    <a href="#">
+                        Munchies
+                    </a>
+
+                    <a href="#">
+                        Cold Drinks
+                    </a>
+
+                    <a href="#">
+                        Staples
+                    </a>
+
+                </div>
+
+
+                <div class="footer-column">
+
+                    <h3>
+                        Useful links
+                    </h3>
+
+                    <a href="#">
+                        About us
+                    </a>
+
+                    <a href="#">
+                        Contact us
+                    </a>
+
+                    <a href="#">
+                        Privacy policy
+                    </a>
+
+                    <a href="#">
+                        Terms & conditions
+                    </a>
+
+                    <a href="#">
+                        Help center
+                    </a>
+
+                </div>
+
+
+                <div class="footer-column">
+
+                    <h3>
+                        Customer support
+                    </h3>
+
+                    <a href="#">
+                        Track order
+                    </a>
+
+                    <a href="#">
+                        Returns
+                    </a>
+
+                    <a href="#">
+                        Refunds
+                    </a>
+
+                    <a href="#">
+                        Delivery information
+                    </a>
+
+                    <a href="#">
+                        FAQs
+                    </a>
+
+                </div>
+
 
             </div>
 
 
-            <div>
+            <div class="footer-bottom">
 
-                <h3>
-                    Shop
-                </h3>
+                <span>
+                    © 2026 Furzo. All rights reserved.
+                </span>
 
-                <ul>
-
-                    <li>Groceries</li>
-                    <li>Fruits & Vegetables</li>
-                    <li>Dairy</li>
-                    <li>Snacks</li>
-
-                </ul>
+                <span>
+                    Made for everyday shopping
+                </span>
 
             </div>
-
-
-            <div>
-
-                <h3>
-                    Help
-                </h3>
-
-                <ul>
-
-                    <li>Contact Us</li>
-                    <li>Delivery Information</li>
-                    <li>Returns</li>
-                    <li>FAQs</li>
-
-                </ul>
-
-            </div>
-
-
-            <div>
-
-                <h3>
-                    Follow Us
-                </h3>
-
-                <p>
-                    Instagram · Facebook · X
-                </p>
-
-            </div>
-
-        </div>
-
-
-        <div class="copyright">
-
-            © 2026 Furzo. All rights reserved.
 
         </div>
 
     </footer>
 
 
+    <!-- =====================================================
+         CART OVERLAY
+    ====================================================== -->
 
-    <!-- =========================================
-         JAVASCRIPT
-    ========================================== -->
+    <div
+        class="overlay"
+        id="cartOverlay"
+        aria-hidden="true"
+    >
 
-  
-<!-- PRODUCT DETAIL POPUP -->
-<div id="productOverlay" class="overlay">
+        <aside
+            class="cart-panel"
+            role="dialog"
+            aria-modal="true"
+            aria-label="Shopping cart"
+        >
 
-    <div class="product-detail-panel">
 
-        <div class="panel-header">
+            <div class="panel-header">
 
-            <h2>Product Details</h2>
+                <h2>
+                    Your cart
+                </h2>
 
-            <button
-                type="button"
-                class="close-button"
-                id="closeProductButton">
-                ×
-            </button>
+                <button
+                    type="button"
+                    class="close-button"
+                    id="closeCartButton"
+                    aria-label="Close cart"
+                >
+                    ×
+                </button>
 
-        </div>
+            </div>
 
-        <div id="productDetail">
 
-            <!-- Product details JavaScript se yahan aayengi -->
+            <div
+                class="cart-items"
+                id="cartItems"
+            >
+            </div>
+
+
+            <div
+                class="cart-summary"
+                id="cartSummary"
+            >
+            </div>
+
+
+        </aside>
+
+    </div>
+
+
+    <!-- =====================================================
+         PRODUCT DETAIL OVERLAY
+    ====================================================== -->
+
+    <div
+        class="overlay"
+        id="productOverlay"
+        aria-hidden="true"
+    >
+
+        <div
+            class="product-detail-panel"
+            role="dialog"
+            aria-modal="true"
+        >
+
+
+            <div
+                class="panel-header"
+            >
+
+                <h2>
+                    Product details
+                </h2>
+
+                <button
+                    type="button"
+                    class="close-button"
+                    id="closeProductButton"
+                    aria-label="Close product"
+                >
+                    ×
+                </button>
+
+            </div>
+
+
+            <div
+                id="productDetail"
+            >
+            </div>
+
 
         </div>
 
     </div>
 
-</div>
-<script src="script.js"></script>
-</body>
 
+    <!-- =====================================================
+         CHECKOUT OVERLAY
+    ====================================================== -->
+
+    <div
+        class="overlay"
+        id="checkoutOverlay"
+        aria-hidden="true"
+    >
+
+        <div
+            class="checkout-panel"
+            role="dialog"
+            aria-modal="true"
+        >
+
+
+            <div
+                class="panel-header"
+                style="padding:0 0 15px;"
+            >
+
+                <h2>
+                    Checkout
+                </h2>
+
+                <button
+                    type="button"
+                    class="close-button"
+                    id="closeCheckoutButton"
+                    aria-label="Close checkout"
+                >
+                    ×
+                </button>
+
+            </div>
+
+
+            <form
+                id="checkoutForm"
+            >
+
+
+                <!-- NAME -->
+
+                <div class="form-group">
+
+                    <label for="customerName">
+                        Full name
+                    </label>
+
+                    <input
+                        type="text"
+                        id="customerName"
+                        name="name"
+                        placeholder="Enter your name"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- PHONE -->
+
+                <div class="form-group">
+
+                    <label for="customerPhone">
+                        Phone number
+                    </label>
+
+                    <input
+                        type="tel"
+                        id="customerPhone"
+                        name="phone"
+                        placeholder="10 digit mobile number"
+                        pattern="[0-9]{10}"
+                        maxlength="10"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- ADDRESS -->
+
+                <div class="form-group">
+
+                    <label for="customerAddress">
+                        Delivery address
+                    </label>
+
+                    <textarea
+                        id="customerAddress"
+                        name="address"
+                        placeholder="House no, street, area, city, PIN code"
+                        required
+                    ></textarea>
+
+                </div>
+
+
+                <!-- PAYMENT -->
+
+                <div class="form-group">
+
+                    <label for="paymentMethod">
+                        Payment method
+                    </label>
+
+                    <select
+                        id="paymentMethod"
+                        name="payment"
+                        required
+                    >
+
+                        <option value="">
+                            Select payment method
+                        </option>
+
+                        <option value="cod">
+                            Cash on Delivery
+                        </option>
+
+                        <option value="upi">
+                            UPI
+                        </option>
+
+                        <option value="card">
+                            Card
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- PAYMENT QUICK OPTIONS -->
+
+                <div
+                    class="payment-options"
+                >
+
+                    <div
+                        class="payment-option"
+                        onclick="
+                            document.getElementById('paymentMethod').value='cod'
+                        "
+                    >
+                        💵
+                        <br>
+                        Cash on Delivery
+                    </div>
+
+                    <div
+                        class="payment-option"
+                        onclick="
+                            document.getElementById('paymentMethod').value='upi'
+                        "
+                    >
+                        📱
+                        <br>
+                        UPI
+                    </div>
+
+                    <div
+                        class="payment-option"
+                        onclick="
+                            document.getElementById('paymentMethod').value='card'
+                        "
+                    >
+                        💳
+                        <br>
+                        Card
+                    </div>
+
+                </div>
+
+
+                <button
+                    type="submit"
+                    class="checkout-button"
+                    style="margin-top:20px;"
+                >
+                    Place order
+                </button>
+
+
+            </form>
+
+
+        </div>
+
+    </div>
+
+
+    <!-- =====================================================
+         TOAST
+    ====================================================== -->
+
+    <div
+        id="toast"
+        role="status"
+        aria-live="polite"
+    >
+    </div>
+
+
+    <!-- =====================================================
+         SCRIPT
+    ====================================================== -->
+
+    <script src="script.js"></script>
+
+
+</body>
 </html>
